@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 10:36:18 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/14 11:24:12 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/14 13:24:54 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,19 @@ t_file	*file_new(char *str, char *flag)
 		ret->flag = NULL;
 	ret->next = NULL;
 	return (ret);
+}
+
+int		lst_len(t_file *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		i++;
+		lst = lst->next;
+	}
+	return (i);
 }
 
 void	add_end_lst(t_file **str, t_file *elem)
