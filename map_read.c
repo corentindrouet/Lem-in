@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 09:37:54 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/14 13:51:11 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/14 15:13:02 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,35 @@ int		verif_hall_tun(char *str)
 	return (-1);
 }
 
-void	assign_tun(t_salle *room, t_file *tunnel, )
+void	assign_tun(t_salle *room, t_file *tunnel)
+{
+	char	***tun;
+	int		i;
+	int		len_tunnel;
+
+	len_tunnel = lst_len(tunnel);
+	tun = (char***)malloc(sizeof(char**) * (len_tunnel + 1));
+	tun[len_tunnel] = NULL;
+	i = 0;
+	while (tunnel)
+	{
+		tun[i++] = ft_strsplit(tunnel->str, '-');
+		tunnel = tunnel->next;
+	}
+	while (room)
+	{
+		i = 0;
+		room->hall = (t_salle**)malloc(sizeof(t_salle*) * (len_tunnel + 1));
+		while (i <= len_tunnel)
+			room->hall[i] = NULL;
+		// a suivre . . .
+		while (i < len_tunnel)
+		{
+			if (!ft_strcmp(tun[i][0], room->name))
+				room->
+		}
+	}
+}
 
 t_salle	*config(t_file *hall, t_file *tunnel)
 {
