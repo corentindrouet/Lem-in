@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 09:37:54 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/14 15:13:02 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/15 09:00:38 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_salle	*new_hall(char *name, char *flag, t_salle *next, int id)
 	prout->name = (char*)ft_strnew(sizeof(char) * (ft_strlen(name) + 1));
 	if (flag)
 	{
-		prout->flag = ft_strnew(ft_strlen(str) + 1);
+		prout->flag = ft_strnew(ft_strlen(flag) + 1);
 		ft_strcpy(prout->flag, flag);
 	}
 	else
@@ -49,11 +49,12 @@ int		verif_hall_tun(char *str)
 	return (-1);
 }
 
-void	assign_tun(t_salle *room, t_file *tunnel)
+void	assign_tun(t_salle *room, t_file *tunnel, int halllen)
 {
 	char	***tun;
 	int		i;
 	int		len_tunnel;
+	t_salle	*start;
 
 	len_tunnel = lst_len(tunnel);
 	tun = (char***)malloc(sizeof(char**) * (len_tunnel + 1));
@@ -64,18 +65,23 @@ void	assign_tun(t_salle *room, t_file *tunnel)
 		tun[i++] = ft_strsplit(tunnel->str, '-');
 		tunnel = tunnel->next;
 	}
+	start = room;
 	while (room)
 	{
 		i = 0;
-		room->hall = (t_salle**)malloc(sizeof(t_salle*) * (len_tunnel + 1));
-		while (i <= len_tunnel)
-			room->hall[i] = NULL;
-		// a suivre . . .
+		room->hall = (t_salle**)malloc(sizeof(t_salle*) * (halllen + 1));
+		while (i <= halllen)
+			room->hall[i++] = NULL;
+		i = 0;
 		while (i < len_tunnel)
 		{
 			if (!ft_strcmp(tun[i][0], room->name))
-				room->
+				room->hall[id_lst(start, tun[i][1])] = p_lst(start, tun[i][1]);
+			else if (!ft_strcmp(tun[i][1], room->name))
+				room->hall[id_lst(start, tun[i][0])] = p_lst(start, tun[i][0]);
+			i++;
 		}
+		room = room->next;
 	}
 }
 
@@ -90,13 +96,14 @@ t_salle	*config(t_file *hall, t_file *tunnel)
 	id = 0;
 	while (hall)
 	{
-		room = new_hall(ft_strsub(hall->str, 0, ft_strchr(str, ' ') - str), hall->flag, room, id);
+		room = new_hall(ft_strsub(hall->str, 0, ft_strchr(hall->str, ' ') - hall->str), hall->flag, room, id);
 		room->hall = (t_salle**)malloc(sizeof(t_salle*) * (halllen + 1));
 		room->hall[halllen] = NULL;
 		hall = hall->next;
 		id++;
 	}
-
+	assign_tun(room, tunnel, halllen);
+	return (room);
 }
 
 t_salle	*init_map(void)
@@ -105,6 +112,7 @@ t_salle	*init_map(void)
 	t_file	*tunnel;
 	int		ret;
 	char	*str;
+	char	*tmpflag;
 
 	hall = NULL;
 	tunnel = NULL;
@@ -114,8 +122,9 @@ t_salle	*init_map(void)
 		{
 			if (str[0] == '#' && str[1] == '#')
 			{
+				tmpflag = &str[2];
 				if ((ret = get_next_line(0, &str)) > 0)
-					add_end_lst(&hall, file_new(str, &str[2]));
+					add_end_lst(&hall, file_new(str, tmpflag));
 			}
 			else if (verif_hall_tun(str) == 0)
 				add_end_lst(&hall, file_new(str, NULL));
@@ -128,5 +137,5 @@ t_salle	*init_map(void)
 	}
 	if (ret == -1)
 		return (NULL);
-	return ();
+	return (config(hall, tunnel));
 }

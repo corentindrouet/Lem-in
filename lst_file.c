@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 10:36:18 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/14 15:13:08 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/15 08:35:08 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,17 @@ int		id_lst(t_salle *room, char *str)
 		room = room->next;
 	}
 	return (-1);
+}
+
+t_salle	*p_lst(t_salle *room, char *str)
+{
+	while (room)
+	{
+		if (!ft_strcmp(str, room->name))
+			return (room);
+		room = room->next;
+	}
+	return (NULL);
 }
 
 void	add_end_lst(t_file **str, t_file *elem)

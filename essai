@@ -1,4 +1,16 @@
+5
+##start
 prout 0 1
 bonjour 5 6
-9-8
-5-6
+qwer 8 9
+azer 5 6
+aurevoir 7 8
+tagueule 6 3
+##end
+tamere 8 7
+prout-bonjour
+qwer-aurevoir
+azer-aurevoir
+aurevoir-bonjour
+bonjour-tagueule
+tagueule-tamere

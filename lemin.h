@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/14 15:13:06 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/15 08:49:01 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,16 @@ typedef struct		s_file
 	struct s_file	*next;
 }					t_file;
 
-void	print_lst(t_file *lst);
-void	add_end_lst(t_file **str, t_file *elem);
-t_file	*file_new(char *str, char *flag);
-t_salle	*new_hall(char *name);
-t_salle	*init_map(void);
-int		lst_len(t_file *lst);
+void				print_lst(t_file *lst);
+void				add_end_lst(t_file **str, t_file *elem);
+t_file				*file_new(char *str, char *flag);
+t_salle				*new_hall(char *name, char *flag, t_salle *next, int id);
+int					verif_hall_tun(char *str);
+void				assign_tun(t_salle *room, t_file *tunnel, int halllen);
+t_salle				*config(t_file *hall, t_file *tunnel);
+t_salle				*init_map(void);
+int					lst_len(t_file *lst);
+t_salle				*p_lst(t_salle *room, char *str);
+int					id_lst(t_salle *room, char *str);
 
 #endif
