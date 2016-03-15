@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/15 08:49:01 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/15 11:21:59 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ typedef struct		s_file
 	char			*flag;
 	struct s_file	*next;
 }					t_file;
+
+typedef struct		s_path
+{
+	char			**path;
+	int				nb_hall;
+}					t_path
 
 void				print_lst(t_file *lst);
 void				add_end_lst(t_file **str, t_file *elem);

@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:23:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/15 09:14:15 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/15 11:26:41 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,19 @@ t_salle	*reverse_lst(t_salle *room)
 	return (room);
 }
 
-void	affiche_salle(t_salle *room)
+void	affiche_salle(t_salle *room, int nbr_f)
 {
 	int	i;
 	int	len;
 
 	len = salle_len(room);
+	ft_printf("%d\n", nbr_f);
 	while (room)
 	{
 		i = -1;
-		ft_printf("salle : %s | flag : %s\n", room->name, room->flag);
+		if (room->flag)
+			ft_printf("##%s\n", room->flag);
+		ft_printf("%s\n", room->name);
 		while (++i <= len)
 			if (room->hall[i])
 				ft_printf("%s-%s\n", room->name, room->hall[i]->name);
@@ -67,12 +70,13 @@ int	main()
 	t_salle	*h;
 	int		nbr_f;
 	char	*ptr;
+	t_path	**all_path;
 
 	if (get_next_line(0, &ptr) <= 0)
 		return (0);
 	nbr_f = ft_atoi(ptr);
 	h = init_map();
 	h = reverse_lst(h);
-	affiche_salle(h);
+	affiche_salle(h, nbr_f);
 	return (0);
 }
