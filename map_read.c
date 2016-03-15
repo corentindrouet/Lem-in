@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 09:37:54 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/15 10:41:49 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/15 13:43:35 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ t_salle	*init_map(void)
 	int		ret;
 	char	*str;
 	char	*tmpflag;
+	t_file	*stop;
 
 	hall = NULL;
 	tunnel = NULL;
@@ -123,8 +124,14 @@ t_salle	*init_map(void)
 			if (str[0] == '#' && str[1] == '#')
 			{
 				tmpflag = &str[2];
-				if ((ret = get_next_line(0, &str)) > 0)
-					add_end_lst(&hall, file_new(str, tmpflag));
+				if (!ft_strcmp(&str[2], "start"))
+				{
+					if ((ret = get_next_line(0, &str)) > 0)
+						add_start_lst(&hall, file_new(str, tmpflag));
+				}
+				else if (!ft_strcmp(&str[2], "end"))
+					if((ret = get_next_line(0, &str)) > 0)
+						stop = file_new(str, tmpflag);
 			}
 			else if (verif_hall_tun(str) == 0)
 				add_end_lst(&hall, file_new(str, NULL));
@@ -135,6 +142,7 @@ t_salle	*init_map(void)
 		}
 		free(str);
 	}
+	add_end_lst(&hall, stop);
 	if (ret == -1)
 		return (NULL);
 	return (config(hall, tunnel));

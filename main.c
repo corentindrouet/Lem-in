@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:23:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/15 11:26:41 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/15 14:14:48 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_salle	*reverse_lst(t_salle *room)
 {
 	t_salle	*tmp;
 	t_salle	*nex;
-	
+
 	tmp = NULL;
 	nex = NULL;
 	while (room)
@@ -70,7 +70,8 @@ int	main()
 	t_salle	*h;
 	int		nbr_f;
 	char	*ptr;
-	t_path	**all_path;
+	//t_path	*all_path;
+	t_stap	st;
 
 	if (get_next_line(0, &ptr) <= 0)
 		return (0);
@@ -78,5 +79,7 @@ int	main()
 	h = init_map();
 	h = reverse_lst(h);
 	affiche_salle(h, nbr_f);
+	st.start = find_flag(h, "start");
+	st.stop = find_flag(h, "stop");
 	return (0);
 }

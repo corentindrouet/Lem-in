@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/15 11:21:59 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/15 14:14:45 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,17 @@ typedef struct		s_path
 {
 	char			**path;
 	int				nb_hall;
-}					t_path
+	struct s_path	*next;
+}					t_path;
 
+typedef struct		s_stap
+{
+	t_salle			*start;
+	t_salle			*stop;
+}					t_stap;
+
+void				add_start_lst(t_file **hall, t_file *elem);
+t_salle				*find_flag(t_salle *room, char *str);
 void				print_lst(t_file *lst);
 void				add_end_lst(t_file **str, t_file *elem);
 t_file				*file_new(char *str, char *flag);
