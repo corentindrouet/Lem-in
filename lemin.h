@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/15 14:14:45 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/15 15:07:13 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,16 @@ typedef struct		s_stap
 void				add_start_lst(t_file **hall, t_file *elem);
 t_salle				*find_flag(t_salle *room, char *str);
 void				print_lst(t_file *lst);
-void				add_end_lst(t_file **str, t_file *elem);
 t_file				*file_new(char *str, char *flag);
+void				add_end_lst(t_file **str, t_file *elem);
 t_salle				*new_hall(char *name, char *flag, t_salle *next, int id);
 int					verif_hall_tun(char *str);
-void				assign_tun(t_salle *room, t_file *tunnel, int halllen);
 t_salle				*config(t_file *hall, t_file *tunnel);
+void				assign_tun(t_salle *room, t_file *tunnel, int halllen);
 t_salle				*init_map(void);
 int					lst_len(t_file *lst);
 t_salle				*p_lst(t_salle *room, char *str);
 int					id_lst(t_salle *room, char *str);
+int					salle_len(t_salle *room);
 
 #endif
