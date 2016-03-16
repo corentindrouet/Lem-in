@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 08:39:34 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/16 11:40:23 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/16 13:38:58 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	free_path(t_path **p)
 		return ;
 	if ((*p)->next)
 		free_path(&((*p)->next));
-	free((*p)->name);
+	if ((*p)->name)
+		free((*p)->name);
 	if ((*p)->next)
 		free((*p)->next);
 }
