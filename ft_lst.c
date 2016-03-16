@@ -6,11 +6,29 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 13:05:21 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/15 13:21:30 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/16 10:57:28 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
+
+int		search_index_low_path(t_path **path)
+{
+	int	min;
+	int	i;
+	int	index;
+
+	i = -1;
+	min = path_len(path[0]);
+	index = 0;
+	while (path[++i] != NULL)
+		if (min > path_len(path[i]))
+		{
+			min = path_len(path[i]);
+			index = i;
+		}
+	return (index);
+}
 
 void	add_start_lst(t_file **hall, t_file *elem)
 {

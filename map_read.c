@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 09:37:54 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/15 13:43:35 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/16 11:54:25 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_salle	*new_hall(char *name, char *flag, t_salle *next, int id)
 	prout->hall = NULL;
 	prout->next = next;
 	prout->id = id;
+	pass = 0;
 	prout->name = (char*)ft_strnew(sizeof(char) * (ft_strlen(name) + 1));
 	if (flag)
 	{

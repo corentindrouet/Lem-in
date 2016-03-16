@@ -6,7 +6,7 @@
 /*   By: cdrouet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 16:53:34 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/01/25 14:51:05 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/16 11:35:02 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,9 @@ static int	ftmemcmp(const void *s1, const void *s2, size_t n)
 
 int			ft_strcmp(const char *s1, const char *s2)
 {
+	if (!s1 && s2)
+		return (1);
+	else if (s1 && !s2)
+		return (1);
 	return (ftmemcmp((void*)s1, (void*)s2, ft_strlen(s2) + 1));
 }

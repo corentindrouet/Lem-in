@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/16 08:59:29 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/16 11:54:27 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct		s_salle
 	char			*name;
 	char			*flag;
 	int				id;
+	int				pass;
 	struct s_salle	**hall;
 	struct s_salle	*next;
 }					t_salle;
@@ -47,13 +48,20 @@ typedef struct		s_stap
 {
 	t_salle			*start;
 	t_salle			*stop;
+	int				nb_room;
 }					t_stap;
 
+t_allp				*free_allp(t_allp **p, t_allp **start);
+int					nb_next(t_stap st, t_salle *room);
+int					recur_path(t_stap st, t_path *pat, t_salle *room);
+void				destroy_last_path(t_path **p);
+void				free_path(t_path **p);
+int					search_index_low_path(t_path **path);
 void				add_allp_end(t_allp **lst, t_allp *new);
 int					path_len(t_path *p);
 t_allp				*new_allp(t_path *p);
 int					search_all_path(t_stap st, t_allp *pat, t_salle *room);
-void				add_path_end(t_path *lst, t_path *new);
+void				add_path_end(t_path **lst, t_path *new);
 t_path				*new_path(char *name);
 void				add_start_lst(t_file **hall, t_file *elem);
 t_salle				*find_flag(t_salle *room, char *str);
