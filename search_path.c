@@ -6,11 +6,12 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 09:16:52 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/16 13:54:22 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/16 15:13:10 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
+#include <stdio.h>
 
 t_path	*new_path(char *name)
 {
@@ -19,6 +20,7 @@ t_path	*new_path(char *name)
 	ne = (t_path*)malloc(sizeof(t_path));
 	ne->name = (char*)ft_strnew(sizeof(char) * (ft_strlen(name) + 1));
 	ft_strcpy(ne->name, name);
+	ne->next = NULL;
 	return (ne);
 }
 
@@ -56,11 +58,12 @@ int		recur_path(t_stap *st, t_path **pat, t_salle *room)
 	int		i;
 	int		p;
 	t_path	**tmp;
+	t_path	*t;
 
-//	write(1, room->name, ft_strlen(room->name));
 	i = nb_next(st, room);
 	add_path_end(pat, new_path(room->name));
-	*pat = (*pat)->next;
+	//*pat = (*pat)->next;
+	t = (*pat)->next;
 	tmp = (t_path**)malloc(sizeof(t_path*) * (i + 1));
 	while (i >= 0)
 		tmp[i--] = NULL;
@@ -71,26 +74,26 @@ int		recur_path(t_stap *st, t_path **pat, t_salle *room)
 	while (!room->hall[i])
 		i++;
 	if (nb_next(st, room) == 1)
-		return (recur_path(st, pat, room->hall[i]));
+		return (recur_path(st, &((*pat)->next), room->hall[i]));
 	room->pass = 1;
 	p = 0;
-	i--;
+	i = -1;
 	while (++i < st->nb_room)
 	{
 		if (room->hall[i])
 		{
-			if (recur_path(st, pat, room->hall[i]))
-				tmp[p++] = (*pat)->next;
+			if (recur_path(st, &((*pat)->next), room->hall[i]))
+			{
+				tmp[p++] = t->next;
+			}
 			else
-				free_path(&((*pat)->next));
-			(*pat)->next = NULL;
+				free_path(&t);
+			t->next = NULL;
 		}
 	}
 	room->pass = 0;
 	if (tmp[0] == NULL)
 		return (0);
-	p = search_index_low_path(tmp);
-	ft_putchar(p + '0');
 	(*pat)->next = tmp[search_index_low_path(tmp)];
 	return (1);
 }
@@ -148,6 +151,6 @@ int		search_all_path(t_stap st, t_allp *pat, t_salle *room)
 				tmp = tmp->next;
 		}
 	}
-	//affiche_allp(pat);
+	affiche_allp(pat);
 	return (0);
 }

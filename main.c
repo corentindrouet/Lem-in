@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:23:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/16 12:47:16 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/16 14:50:17 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	main()
 	h = reverse_lst(h);
 	affiche_salle(h, nbr_f);
 	st.start = find_flag(h, "start");
-	st.stop = find_flag(h, "stop");
+	st.stop = find_flag(h, "end");
 	st.nb_room = salle_len(h);
 	all_path = NULL;
 	search_all_path(st, all_path, h);
