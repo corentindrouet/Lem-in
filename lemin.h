@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/15 15:07:13 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/16 08:59:29 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,16 @@ typedef struct		s_file
 
 typedef struct		s_path
 {
-	char			**path;
-	int				nb_hall;
+	char			*name;
 	struct s_path	*next;
 }					t_path;
+
+typedef struct		s_allp
+{
+	t_path			*path;
+	int				nb_hall;
+	struct s_allp	*next;
+}					t_allp;
 
 typedef struct		s_stap
 {
@@ -43,6 +49,12 @@ typedef struct		s_stap
 	t_salle			*stop;
 }					t_stap;
 
+void				add_allp_end(t_allp **lst, t_allp *new);
+int					path_len(t_path *p);
+t_allp				*new_allp(t_path *p);
+int					search_all_path(t_stap st, t_allp *pat, t_salle *room);
+void				add_path_end(t_path *lst, t_path *new);
+t_path				*new_path(char *name);
 void				add_start_lst(t_file **hall, t_file *elem);
 t_salle				*find_flag(t_salle *room, char *str);
 void				print_lst(t_file *lst);

@@ -6,7 +6,7 @@
 #    By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/03/15 08:11:19 by cdrouet           #+#    #+#              #
-#    Updated: 2016/03/15 13:22:14 by cdrouet          ###   ########.fr        #
+#    Updated: 2016/03/16 08:50:30 by cdrouet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,8 @@ SRC = main.c \
 	  lst_file.c \
 	  map_read.c \
 	  ft_lst.c \
+	  search_path.c \
+	  ft_path.c \
 
 BIN = $(SRC:.c=.o)
 

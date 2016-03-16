@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:23:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/15 15:07:11 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/16 08:50:54 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	main()
 	t_salle	*h;
 	int		nbr_f;
 	char	*ptr;
-	//t_path	*all_path;
+	t_allp	*all_path;
 	t_stap	st;
 
 	if (get_next_line(0, &ptr) <= 0)
@@ -81,5 +81,7 @@ int	main()
 	affiche_salle(h, nbr_f);
 	st.start = find_flag(h, "start");
 	st.stop = find_flag(h, "stop");
+	all_path = NULL;
+	search_all_path(st, all_path, h);
 	return (0);
 }
