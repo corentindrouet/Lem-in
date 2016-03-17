@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:23:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/17 14:26:47 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/17 16:16:00 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main()
 	st.stop = find_flag(h, "end");
 	st.nb_room = salle_len(h);
 	all_path = NULL;
-	search_all_path(st, &all_path, h);
+	search_all_path(st, &all_path, &h);
 	reinit_nb_hall(&all_path);
 //	verif_bouchon(&all_path);
 	tri_path(&all_path);
