@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 08:24:58 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/17 10:55:23 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/17 13:21:48 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,21 +77,27 @@ void	free_elem(t_allp **al, t_allp *elem)
 	}
 }
 
-void	verif_bouchon(t_allp **all_path)
+int		verif_bouchon(t_allp **all_path)
 {
 	t_allp	*tmp_i;
 	t_allp	*tmp_j;
+	int		i;
 
 	tmp_i = (*all_path);
+	i = 0;
 	while (tmp_i)
 	{
 		tmp_j = tmp_i->next;
 		while (tmp_j)
 		{
 			if (!compar_path(tmp_i->path, tmp_j->path))
+			{
 				free_elem(all_path, (tmp_i->nb_hall > tmp_j->nb_hall) ? tmp_i : tmp_j);
+				i++;
+			}
 			tmp_j = tmp_j->next;
 		}
 		tmp_i = tmp_i->next;
 	}
+	return (i);
 }

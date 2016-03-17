@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 09:16:52 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/17 08:49:54 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/17 14:29:36 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,59 @@ int		nb_next(t_stap *st, t_salle *room)
 	return (compt);
 }
 
-int		recur_path(t_stap *st, t_path **pat, t_salle *room)
+void	pat_aff(t_path *tmp)
+{
+	while (tmp)
+	{
+		ft_printf("%s-", tmp->name);
+		tmp = tmp->next;
+	}
+}
+
+void	aff(t_path **tmp)
+{
+	int	i;
+
+	i = -1;
+		write(1, "\n", 1);
+	while (tmp[++i])
+	{
+		pat_aff(tmp[i]);
+		write(1, "\n", 1);
+	}
+}
+
+int		verif_p(t_path *p, char *name)
+{
+	t_path	*tmp;
+
+	tmp = p;
+	while (tmp->next)
+	{
+		if (!ft_strcmp(tmp->name, name))
+			return (0);
+		tmp = tmp->next;
+	}
+	return (1);
+}
+
+int		verif_d(t_allp *pt, char *name)
+{
+	t_allp	*tmp;
+
+	tmp = pt;
+	if (!tmp || !(tmp->next))
+		return (1);
+	while (tmp)
+	{
+		if (!verif_p(tmp->path, name))
+			return (0);
+		tmp = tmp->next;
+	}
+	return (1);
+}
+
+int		recur_path(t_stap *st, t_path **pat, t_salle *room, t_allp *pt)
 {
 	int		i;
 	int		p;
@@ -68,12 +120,13 @@ int		recur_path(t_stap *st, t_path **pat, t_salle *room)
 		tmp[i--] = NULL;
 	if (!ft_strcmp(room->flag, "end"))
 		return (1);
-	if (!nb_next(st, room) || !ft_strcmp(room->flag, "start") || room->pass == 1)
+	if (!nb_next(st, room) || !ft_strcmp(room->flag, "start") || room->pass == 1
+		|| !verif_d(pt, room->name))
 		return (0);
 	while (!room->hall[i])
 		i++;
 	if (nb_next(st, room) == 1)
-		return (recur_path(st, &t, room->hall[i]));
+		return (recur_path(st, &t, room->hall[i], pt));
 	room->pass = 1;
 	p = 0;
 	i = -1;
@@ -81,7 +134,7 @@ int		recur_path(t_stap *st, t_path **pat, t_salle *room)
 	{
 		if (room->hall[i])
 		{
-			if (recur_path(st, &t, room->hall[i]))
+			if (recur_path(st, &t, room->hall[i], pt))
 			{
 				tmp[p++] = t->next;
 			}
@@ -124,7 +177,7 @@ int		search_all_path(t_stap st, t_allp **pat, t_salle *room)
 	{
 		if (room->hall[i])
 		{
-			if (!recur_path(&st, &(tmp->path), room->hall[i]))
+			if (!recur_path(&st, &(tmp->path), room->hall[i], *pat))
 				tmp = free_allp(&tmp, pat);
 			else
 				tmp = tmp->next;

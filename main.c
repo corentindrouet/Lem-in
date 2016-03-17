@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:23:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/17 11:38:25 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/17 14:26:47 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,6 @@ t_salle	*reverse_lst(t_salle *room)
 	return (room);
 }
 
-void	affiche_salle(t_salle *room, int nbr_f)
-{
-	int	i;
-	int	len;
-
-	len = salle_len(room);
-	ft_printf("%d\n", nbr_f);
-	while (room)
-	{
-		i = -1;
-		if (room->flag)
-			ft_printf("##%s\n", room->flag);
-		ft_printf("%s\n", room->name);
-		while (++i <= len)
-			if (room->hall[i])
-				ft_printf("%s-%s\n", room->name, room->hall[i]->name);
-		write(1, "\n", 1);
-		room = room->next;
-	}
-}
-
 void	affiche_path(t_path *p)
 {
 	while (p)
@@ -97,16 +76,15 @@ int	main()
 	if (get_next_line(0, &ptr) <= 0)
 		return (0);
 	nbr_f = ft_atoi(ptr);
-	h = init_map();
+	h = init_map(nbr_f);
 	h = reverse_lst(h);
-	affiche_salle(h, nbr_f);
 	st.start = find_flag(h, "start");
 	st.stop = find_flag(h, "end");
 	st.nb_room = salle_len(h);
 	all_path = NULL;
 	search_all_path(st, &all_path, h);
 	reinit_nb_hall(&all_path);
-	verif_bouchon(&all_path);
+//	verif_bouchon(&all_path);
 	tri_path(&all_path);
 	affiche_allp(all_path);
 	return (0);

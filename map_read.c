@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 09:37:54 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/16 13:46:45 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/17 12:47:21 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,25 @@ t_salle	*config(t_file *hall, t_file *tunnel)
 	return (room);
 }
 
-t_salle	*init_map(void)
+void	affiche_all(t_file *hall, t_file *tun, int nb_f)
+{
+	ft_putnbr(nb_f);
+	write(1, "\n", 1);
+	while (hall)
+	{
+		if (hall->flag)
+			ft_printf("##%s\n", hall->flag);
+		ft_printf("%s\n", hall->str);
+		hall = hall->next;
+	}
+	while (tun)
+	{
+		ft_printf("%s\n", tun->str);
+		tun = tun->next;
+	}
+}
+
+t_salle	*init_map(int nb_f)
 {
 	t_file	*hall;
 	t_file	*tunnel;
@@ -147,6 +165,7 @@ t_salle	*init_map(void)
 		free(str);
 	}
 	add_end_lst(&hall, stop);
+	affiche_all(hall, tunnel, nb_f);
 	if (ret == -1)
 		return (NULL);
 	return (config(hall, tunnel));
