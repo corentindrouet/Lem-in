@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 09:16:52 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/16 15:13:10 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/17 08:14:59 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		recur_path(t_stap *st, t_path **pat, t_salle *room)
 	while (!room->hall[i])
 		i++;
 	if (nb_next(st, room) == 1)
-		return (recur_path(st, &((*pat)->next), room->hall[i]));
+		return (recur_path(st, &t, room->hall[i]));
 	room->pass = 1;
 	p = 0;
 	i = -1;
@@ -82,7 +82,7 @@ int		recur_path(t_stap *st, t_path **pat, t_salle *room)
 	{
 		if (room->hall[i])
 		{
-			if (recur_path(st, &((*pat)->next), room->hall[i]))
+			if (recur_path(st, &t, room->hall[i]))
 			{
 				tmp[p++] = t->next;
 			}
@@ -94,7 +94,7 @@ int		recur_path(t_stap *st, t_path **pat, t_salle *room)
 	room->pass = 0;
 	if (tmp[0] == NULL)
 		return (0);
-	(*pat)->next = tmp[search_index_low_path(tmp)];
+	t->next = tmp[search_index_low_path(tmp)];
 	return (1);
 }
 
