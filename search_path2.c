@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 08:24:58 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/17 09:41:20 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/17 10:55:23 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ int		compar_path(t_path *p1, t_path *p2)
 {
 	t_path	*tmp;
 
+	p1 = p1->next;
 	while (p1)
 	{
-		tmp = p2;
+		tmp = p2->next;
 		while (tmp && tmp->next)
 		{
 			if (!ft_strcmp(p1->name, tmp->name))
