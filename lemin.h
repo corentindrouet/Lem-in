@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/17 08:40:29 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/17 09:36:51 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ typedef struct		s_stap
 	int				nb_room;
 }					t_stap;
 
+int					compar_path(t_path *p1, t_path *p2);
+t_allp				*free_p(t_allp **elem);
+void				free_elem(t_allp **al, t_allp *elem);
+void				verif_bouchon(t_allp **all_path);
 int					allp_len(t_allp *lst);
 void				reinit_nb_hall(t_allp **all_path);
 t_allp				*free_allp(t_allp **p, t_allp **start);
