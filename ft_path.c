@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 08:39:34 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/16 14:48:21 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/17 08:46:16 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ t_allp	*new_allp(t_path *p)
 
 	lst = (t_allp*)malloc(sizeof(t_allp));
 	lst->path = p;
-	lst->nb_hall = path_len(p);
+	lst->nb_hall = 1;
+	lst->next = NULL;
 	return (lst);
 }

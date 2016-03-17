@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 09:16:52 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/17 08:14:59 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/17 08:49:54 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int		recur_path(t_stap *st, t_path **pat, t_salle *room)
 
 	i = nb_next(st, room);
 	add_path_end(pat, new_path(room->name));
-	//*pat = (*pat)->next;
 	t = (*pat)->next;
 	tmp = (t_path**)malloc(sizeof(t_path*) * (i + 1));
 	while (i >= 0)
@@ -98,27 +97,7 @@ int		recur_path(t_stap *st, t_path **pat, t_salle *room)
 	return (1);
 }
 
-void	affiche_path(t_path *p)
-{
-	while (p)
-	{
-		write(1, p->name, ft_strlen(p->name));
-		write(1, "-", 1);
-		p = p->next;
-	}
-}
-
-void	affiche_allp(t_allp *p)
-{
-	while (p)
-	{
-		affiche_path(p->path);
-		p = p->next;
-		write(1, "\n", 1);
-	}
-}
-
-int		search_all_path(t_stap st, t_allp *pat, t_salle *room)
+int		search_all_path(t_stap st, t_allp **pat, t_salle *room)
 {
 	int		i;
 	int		lenroom;
@@ -134,23 +113,22 @@ int		search_all_path(t_stap st, t_allp *pat, t_salle *room)
 		if (room->hall[i])
 		{
 			if (!strcmp(room->flag, "start"))
-				add_allp_end(&pat, new_allp(new_path(room->name)));
+				add_allp_end(pat, new_allp(new_path(room->name)));
 			nb_path++;
 		}
 	}
 	i = -1;
-	tmp = pat;
+	tmp = *pat;
 	room->pass = 1;
 	while (++i < lenroom)
 	{
 		if (room->hall[i])
 		{
 			if (!recur_path(&st, &(tmp->path), room->hall[i]))
-				tmp = free_allp(&tmp, &pat);
+				tmp = free_allp(&tmp, pat);
 			else
 				tmp = tmp->next;
 		}
 	}
-	affiche_allp(pat);
 	return (0);
 }

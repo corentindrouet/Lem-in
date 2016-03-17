@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:23:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/16 14:50:17 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/17 08:52:45 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,27 @@ void	affiche_salle(t_salle *room, int nbr_f)
 	}
 }
 
+void	affiche_path(t_path *p)
+{
+	while (p)
+	{
+		write(1, p->name, ft_strlen(p->name));
+		write(1, "-", 1);
+		p = p->next;
+	}
+}
+
+void	affiche_allp(t_allp *p)
+{
+	while (p)
+	{
+		affiche_path(p->path);
+		ft_putnbr(p->nb_hall);
+		p = p->next;
+		write(1, "\n", 1);
+	}
+}
+
 int	main()
 {
 	t_salle	*h;
@@ -83,6 +104,8 @@ int	main()
 	st.stop = find_flag(h, "end");
 	st.nb_room = salle_len(h);
 	all_path = NULL;
-	search_all_path(st, all_path, h);
+	search_all_path(st, &all_path, h);
+	reinit_nb_hall(&all_path);
+	affiche_allp(all_path);
 	return (0);
 }
