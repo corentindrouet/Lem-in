@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:23:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/17 09:38:20 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/17 11:38:25 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int	main()
 	search_all_path(st, &all_path, h);
 	reinit_nb_hall(&all_path);
 	verif_bouchon(&all_path);
+	tri_path(&all_path);
 	affiche_allp(all_path);
 	return (0);
 }
