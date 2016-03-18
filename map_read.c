@@ -6,32 +6,11 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 09:37:54 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/17 12:47:21 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/18 10:39:46 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
-
-t_salle	*new_hall(char *name, char *flag, t_salle *next, int id)
-{
-	t_salle	*prout;
-
-	prout = (t_salle*)malloc(sizeof(t_salle));
-	prout->hall = NULL;
-	prout->next = next;
-	prout->id = id;
-	prout->pass = 0;
-	prout->name = (char*)ft_strnew(sizeof(char) * (ft_strlen(name) + 1));
-	if (flag)
-	{
-		prout->flag = ft_strnew(ft_strlen(flag) + 1);
-		ft_strcpy(prout->flag, flag);
-	}
-	else
-		prout->flag = NULL;
-	ft_strcpy(prout->name, name);
-	return (prout);
-}
 
 int		verif_hall_tun(char *str)
 {
@@ -98,7 +77,8 @@ t_salle	*config(t_file *hall, t_file *tunnel)
 	id = 0;
 	while (hall)
 	{
-		room = new_hall(ft_strsub(hall->str, 0, ft_strchr(hall->str, ' ') - hall->str), hall->flag, room, id);
+		room = new_hall(ft_strsub(hall->str, 0,
+			ft_strchr(hall->str, ' ') - hall->str), hall->flag, room, id);
 		room->hall = (t_salle**)malloc(sizeof(t_salle*) * (halllen + 1));
 		p = -1;
 		while (++p <= halllen)
@@ -152,7 +132,7 @@ t_salle	*init_map(int nb_f)
 						add_start_lst(&hall, file_new(str, tmpflag));
 				}
 				else if (!ft_strcmp(&str[2], "end"))
-					if((ret = get_next_line(0, &str)) > 0)
+					if ((ret = get_next_line(0, &str)) > 0)
 						stop = file_new(str, tmpflag);
 			}
 			else if (verif_hall_tun(str) == 0)

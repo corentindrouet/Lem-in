@@ -6,7 +6,7 @@
 #    By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/03/15 08:11:19 by cdrouet           #+#    #+#              #
-#    Updated: 2016/03/17 11:34:11 by cdrouet          ###   ########.fr        #
+#    Updated: 2016/03/18 10:36:10 by cdrouet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC = main.c \
 	  ft_path.c \
 	  search_path2.c \
 	  tri_path.c \
+	  ft_plus.c \
 
 BIN = $(SRC:.c=.o)
 

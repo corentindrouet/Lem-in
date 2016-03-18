@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/18 08:34:03 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/18 10:37:00 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,14 @@ int					allp_len(t_allp *lst);
 void				reinit_nb_hall(t_allp **all_path);
 t_allp				*free_allp(t_allp **p, t_allp **start);
 int					nb_next(t_stap *st, t_salle *room);
-int					recur_path(t_stap *st, t_path **pat, t_salle **room, t_allp **pt);
+int					recur_path(t_stap *st,
+						t_path **pat, t_salle **room, t_allp **pt);
 void				destroy_last_path(t_path **p);
 void				free_path(t_path **p);
 int					search_index_low_path(t_path **path);
 void				add_allp_end(t_allp **lst, t_allp *new);
 int					path_len(t_path *p);
+void				affiche_allp(t_allp *p);
 t_allp				*new_allp(t_path *p);
 int					search_all_path(t_stap st, t_allp **pat, t_salle **room);
 void				add_path_end(t_path **lst, t_path *new);

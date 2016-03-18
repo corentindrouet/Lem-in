@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 10:36:18 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/15 08:35:08 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/18 10:35:58 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,5 @@ void	add_end_lst(t_file **str, t_file *elem)
 		while (temp->next)
 			temp = temp->next;
 		temp->next = elem;
-	}
-}
-
-void	print_lst(t_file *lst)
-{
-	while (lst)
-	{
-		ft_printf("%s\n", lst->str);
-		lst = lst->next;
 	}
 }

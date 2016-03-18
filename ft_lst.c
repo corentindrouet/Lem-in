@@ -6,11 +6,26 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 13:05:21 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/16 10:57:28 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/18 09:47:06 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
+
+int		allp_len(t_allp *lst)
+{
+	t_allp	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = lst;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
 
 int		search_index_low_path(t_path **path)
 {
