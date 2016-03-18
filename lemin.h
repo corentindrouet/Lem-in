@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/18 11:59:38 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/18 14:27:25 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ typedef struct		s_path
 typedef struct		s_fourmi
 {
 	int				id;
-	t_salle			*name;
+	int				arrive;
+//	t_salle			*name;
 	t_path			*path;
 	struct s_fourmi	*next;
 }					t_fourmis;
