@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 09:16:52 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/17 16:15:54 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/18 08:15:37 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,11 @@ int		verif_d(t_allp *pt, char *name)
 	t_allp	*last;
 
 	tmp = pt;
+	last = pt;
 	if (!tmp || !(tmp->next))
 		return (1);
-	while (tmp->next)
-		tmp = tmp->next;
-	last = tmp;
-	tmp = pt;
+	while (last->next)
+		last = last->next;
 	while (tmp->next)
 	{
 		if (!verif_p(tmp->path, name, path_len(last->path)))
@@ -118,7 +117,7 @@ int		verif_d(t_allp *pt, char *name)
 	return (1);
 }
 
-int		recur_path(t_stap *st, t_path **pat, t_salle **room, t_allp *pt)
+int		recur_path(t_stap *st, t_path **pat, t_salle **room, t_allp **pt)
 {
 	int		i;
 	int		p;
@@ -134,7 +133,7 @@ int		recur_path(t_stap *st, t_path **pat, t_salle **room, t_allp *pt)
 	if (!ft_strcmp((*room)->flag, "end"))
 		return (1);
 	if (!nb_next(st, *room) || !ft_strcmp((*room)->flag, "start") || (*room)->pass == 1
-		|| !verif_d(pt, (*room)->name))
+		|| !verif_d(*pt, (*room)->name))
 		return (0);
 	while (!(*room)->hall[i])
 		i++;
@@ -190,7 +189,7 @@ int		search_all_path(t_stap st, t_allp **pat, t_salle **room)
 	{
 		if ((*room)->hall[i])
 		{
-			if (!recur_path(&st, &(tmp->path), &((*room)->hall[i]), *pat))
+			if (!recur_path(&st, &(tmp->path), &((*room)->hall[i]), pat))
 				tmp = free_allp(&tmp, pat);
 			else
 				tmp = tmp->next;

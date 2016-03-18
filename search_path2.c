@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 08:24:58 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/17 13:21:48 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/18 08:33:58 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ void	free_elem(t_allp **al, t_allp *elem)
 	t_allp	*tmp;
 
 	tmp = *al;
+	if (tmp == elem)
+	{
+		*al = free_p(&tmp);
+		return ;
+	}
 	while (tmp)
 	{
 		if (tmp->next == elem)
