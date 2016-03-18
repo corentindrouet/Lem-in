@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/18 14:27:25 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/18 15:54:13 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ typedef struct		s_stap
 	int				nb_room;
 }					t_stap;
 
+t_fourmis			**init_fourmis(int nb_f, t_allp *path);
+t_path				*path_index(t_allp *path, int i_fourmis);
+t_fourmis			*new_fourmis(int id, t_path *path);
+t_fourmis			*add_fourmis_end(t_fourmis **prems, t_fourmis *elem, int nb_path);
+void				deplace_fourmis(t_fourmis **f, t_salle *fin, t_salle **room);
+void				pass_fourmis(t_salle *room, t_allp *path, int nb_f);
 int					verif_tri(t_allp *p);
 void				tri_path(t_allp **p);
 int					compar_path(t_path *p1, t_path *p2);
