@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 10:59:48 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/21 13:55:24 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/21 14:38:41 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	deplace_fourmis(t_fourmis **f, t_salle **fin, t_salle **room)
 	t_fourmis	*tmp;
 	t_salle		*tempo;
 
-	tmp = (*f);
+/*	tmp = (*f);
 	tempo = *room;
 	while (tempo && ft_strcmp(tempo->name, tmp->path->name))
 		tempo = tempo->next;
@@ -34,7 +34,30 @@ void	deplace_fourmis(t_fourmis **f, t_salle **fin, t_salle **room)
 	{
 		tmp->arrive++;
 		(*fin)->pass++;
+	}*/
+	tmp = *f;
+	tempo = *room;
+	if (!ft_strcmp(tmp->path->next->name, (*fin)->name))
+	{
+		tmp->arrive++;
+		(*fin)->pass++;
+		while (ft_strcmp(tempo->name, tmp->path->name))
+			tempo = tempo->next;
+		tempo->pass = 0;
 	}
+	else
+	{
+		while (ft_strcmp(tempo->name, tmp->path->next->name))
+			tempo = tempo->next;
+		if (tempo->pass)
+			return ;
+		tempo->pass = 1;
+		tempo = *room;
+		while (ft_strcmp(tempo->name, tmp->path->name))
+			tempo = tempo->next;
+		tempo->pass = 0;
+	}
+	tmp->path = tmp->path->next;
 	ft_printf("L%d-%s ", tmp->id, tmp->path->name);
 }
 
@@ -60,7 +83,6 @@ void	pass_fourmis(t_salle *room, t_allp *path, int nb_f)
 	t_salle		*fin;
 	t_fourmis	**f;
 	t_fourmis	*tmp;
-//	t_fourmis	*l;
 	int			i;
 
 	fin = find_flag(room, "end");
