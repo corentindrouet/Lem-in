@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 10:59:48 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/21 14:38:41 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/21 15:32:05 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void	pass_fourmis(t_salle *room, t_allp *path, int nb_f)
 	f = NULL;
 	f = init_fourmis(nb_f, path);
 	ft_putchar('\n');
-	aff_fourmis(f, allp_len(path));
 	while (fin->pass < nb_f)
 	{
 		i = -1;
