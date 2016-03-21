@@ -6,13 +6,13 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 10:59:48 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/18 15:54:16 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/21 09:08:39 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-void	deplace_fourmis(t_fourmis **f, t_salle *fin, t_salle **room)
+void	deplace_fourmis(t_fourmis **f, t_salle **fin, t_salle **room)
 {
 	t_fourmis	*tmp;
 	t_salle		*tempo;
@@ -26,8 +26,11 @@ void	deplace_fourmis(t_fourmis **f, t_salle *fin, t_salle **room)
 		return ;
 	if (!tempo->flag)
 		tempo->pass = 1;
-	if (!ft_strcmp(tmp->path->name, fin->name))
+	if (!ft_strcmp(tmp->path->name, (*fin)->name))
+	{
 		tmp->arrive++;
+		(*fin)->pass++;
+	}
 	ft_printf("L%d-%s ", tmp->id, tmp->path->name);
 }
 
@@ -35,7 +38,7 @@ void	pass_fourmis(t_salle *room, t_allp *path, int nb_f)
 {
 	t_salle		*fin;
 	t_fourmis	**f;
-	t_fourmis	*tmp;
+	t_fourmis	**tmp;
 	int			i;
 
 	fin = find_flag(room, "end");
@@ -47,13 +50,13 @@ void	pass_fourmis(t_salle *room, t_allp *path, int nb_f)
 		i = -1;
 		while (f[++i])
 		{
-	//	write(1, "o", 1);
-			tmp = f[i];
-			while (tmp)
+			tmp = &(f[i]);
+			while ((*tmp))
 			{
-				if (!tmp->arrive)
-					deplace_fourmis(&tmp, fin, &room);
-				tmp = tmp->next;
+				if (!(*tmp)->arrive)
+					deplace_fourmis(tmp, &fin, &room);
+				//ft_putchar('\n');
+				*tmp = (*tmp)->next;
 			}
 		}
 	}

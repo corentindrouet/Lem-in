@@ -6,27 +6,26 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 08:43:11 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/18 15:54:08 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/21 08:57:31 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-t_fourmis	*add_fourmis_end(t_fourmis **prems, t_fourmis *elem, int nb_path)
+void		add_fourmis_end(t_fourmis ***prems, t_fourmis *elem, int nb_path)
 {
-	t_fourmis	*tmp;
+	t_fourmis	**tmp;
 
-//	ft_printf("%d\n", elem->id);
-	tmp = prems[nb_path];
-	if (!tmp)
+	tmp = (*prems);
+	if (!tmp[nb_path])
 	{
-		tmp = elem;
-		return (prems[nb_path]);
+		tmp[nb_path] = elem;
+		return ;
 	}
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = elem;
-	return (prems[nb_path]);
+	while (tmp[nb_path]->next)
+		tmp[nb_path] = tmp[nb_path]->next;
+	tmp[nb_path]->next = elem;
+	return ;
 }
 
 t_fourmis	*new_fourmis(int id, t_path *path)
@@ -46,10 +45,10 @@ t_path		*path_index(t_allp *path, int i_fourmis)
 	int		i;
 
 	i = path->nb_hall - 2;
-	while (i <= i_fourmis && path->next)
+	while (i < i_fourmis && path->next)
 	{
 		path = path->next;
-		i += path->nb_hall - 2;
+		i += (path->nb_hall - 2);
 	}
 	return (path->path);
 }
@@ -58,7 +57,7 @@ void		aff_fourmis(t_fourmis *p)
 {
 	while (p)
 	{
-		ft_printf("%s-", p->id);
+//		ft_printf("%s-", p->path->next->name);
 		p = p->next;
 	}
 }
@@ -83,14 +82,12 @@ t_fourmis	**init_fourmis(int nb_f, t_allp *path)
 		if (creat[nb_path] &&
 			ft_strcmp(tmp->next->name, creat[nb_path]->path->next->name))
 			nb_path--;
-		creat[nb_path] = add_fourmis_end(creat, new_fourmis(f_rest + 1, tmp), nb_path);
-		if (creat[nb_path])
-			ft_putstr("ok");
+		add_fourmis_end(&creat, new_fourmis(f_rest + 1, tmp), nb_path);
 	}
-	ft_putnbr(nb_path);
 	f_rest = -1;
-	write(1, "o", 1);
-	while (creat[++f_rest])
-		aff_fourmis(creat[f_rest]);
+	nb_path = allp_len(path);
+	while (++f_rest < nb_path)
+		if (creat[f_rest])
+			aff_fourmis(creat[f_rest]);
 	return (creat);
 }
