@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 08:43:11 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/21 11:58:46 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/21 13:35:52 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,8 @@ int			total_len(t_allp *path, int nb)
 t_fourmis	**init_fourmis(int nb_f, t_allp *path)
 {
 	t_fourmis	**creat;
-//	t_path		*tmp;
 	int			f_rest;
 	int			nb_path;
-	int			len;
 	int			i;
 
 	nb_path = allp_len(path);
@@ -103,19 +101,10 @@ t_fourmis	**init_fourmis(int nb_f, t_allp *path)
 	while (++f_rest <= nb_path)
 		creat[f_rest] = NULL;
 	f_rest = 0;
-//	nb_path;
-/*	while (++f_rest < nb_f)
-	{
-		tmp = path_index(path, nb_f - f_rest);
-		if (creat[nb_path] &&
-			ft_strcmp(tmp->next->name, creat[nb_path]->path->next->name))
-			nb_path--;
-		add_fourmis_end(&creat, new_fourmis(f_rest + 1, tmp), nb_path);
-	}
-	f_rest = -1;*/
 	while (f_rest < nb_f)
 	{
-		while (nb_f < (len = total_len(path, nb_path)))
+		while ((nb_f - f_rest) <= total_len(path, nb_path) &&
+			(nb_f - f_rest) <= total_len(path, nb_path - 1) && nb_path > 1)
 			nb_path--;
 		i = -1;
 		while (++i < nb_path && f_rest < nb_f)
