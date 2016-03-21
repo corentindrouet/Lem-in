@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 09:16:52 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/18 10:42:12 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/21 10:42:47 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_path	*new_path(char *name)
 
 	if ((ne = (t_path*)malloc(sizeof(t_path))) == NULL)
 		return (NULL);
-	if (!(ne->name = (char*)ft_strnew(sizeof(char) * (ft_strlen(name) + 1))))
+	if ((ne->name = ft_strnew(sizeof(char) * (ft_strlen(name) + 1))) == NULL)
 		return (NULL);
 	ft_strcpy(ne->name, name);
 	ne->next = NULL;
@@ -32,7 +32,7 @@ void	add_path_end(t_path **lst, t_path *new)
 
 	tmp = *lst;
 	if (!tmp)
-		tmp = new;
+		*lst = new;
 	else
 	{
 		while (tmp->next)
