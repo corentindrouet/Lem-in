@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 08:43:11 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/21 13:35:52 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/22 11:36:33 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,32 +43,10 @@ t_path		*copy_path(t_path *p)
 	return (ret);
 }
 
-t_fourmis	*new_fourmis(int id, t_path *path)
-{
-	t_fourmis	*f;
-
-	f = (t_fourmis*)malloc(sizeof(t_fourmis));
-	f->id = id;
-	f->path = path;
-	f->arrive = 0;
-	f->next = NULL;
-	return (f);
-}
-
 t_path		*path_index(t_allp *path, int i)
 {
-//	int		i;
 	t_allp	*tmp;
-	
-/*	tmp = path;
-	i = path->nb_hall - 1;
-	while (i < i_fourmis)
-	{
-		path = path->next;
-		if (!path)
-			path = tmp;
-		i += (path->nb_hall - 1);
-	}*/
+
 	tmp = path;
 	while (i--)
 		path = path->next;
@@ -108,10 +86,8 @@ t_fourmis	**init_fourmis(int nb_f, t_allp *path)
 			nb_path--;
 		i = -1;
 		while (++i < nb_path && f_rest < nb_f)
-		{
-			add_fourmis_end(&creat, new_fourmis(f_rest + 1, path_index(path, i)), i);
-			f_rest++;
-		}
+			add_fourmis_end(&creat,
+				new_fourmis(++f_rest, path_index(path, i)), i);
 	}
 	nb_path = allp_len(path);
 	return (creat);

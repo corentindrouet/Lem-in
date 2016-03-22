@@ -6,13 +6,13 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 10:34:56 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/18 10:38:48 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/22 11:50:17 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-int		path_len(t_path *p)
+int			path_len(t_path *p)
 {
 	int	i;
 
@@ -25,7 +25,19 @@ int		path_len(t_path *p)
 	return (i);
 }
 
-void	print_lst(t_file *lst)
+t_fourmis	*new_fourmis(int id, t_path *path)
+{
+	t_fourmis	*f;
+
+	f = (t_fourmis*)malloc(sizeof(t_fourmis));
+	f->id = id;
+	f->path = path;
+	f->arrive = 0;
+	f->next = NULL;
+	return (f);
+}
+
+void		print_lst(t_file *lst)
 {
 	while (lst)
 	{
@@ -34,7 +46,34 @@ void	print_lst(t_file *lst)
 	}
 }
 
-t_salle	*new_hall(char *name, char *flag, t_salle *next, int id)
+int			verif_tun(char *str)
+{
+	int		i;
+	int		nb;
+	int		j;
+	char	**split;
+
+	if (!ft_strchr(str, '-'))
+		return (-1);
+	split = ft_strsplit(str, '-');
+	nb = 0;
+	i = 0;
+	while (str[i])
+		if (str[i++] == '-')
+			nb++;
+	i = 0;
+	while (split[i])
+		i++;
+	j = 0;
+	while (split[++j])
+		free(split[j]);
+	free(split);
+	if (nb == 1 && i == 2)
+		return (1);
+	return (-1);
+}
+
+t_salle		*new_hall(char *name, char *flag, t_salle *next, int id)
 {
 	t_salle	*prout;
 

@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/21 13:45:53 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/22 11:49:51 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct		s_fourmi
 {
 	int				id;
 	int				arrive;
-//	t_salle			*name;
 	t_path			*path;
 	struct s_fourmi	*next;
 }					t_fourmis;
@@ -63,8 +62,10 @@ typedef struct		s_stap
 t_fourmis			**init_fourmis(int nb_f, t_allp *path);
 t_path				*path_index(t_allp *path, int i_fourmis);
 t_fourmis			*new_fourmis(int id, t_path *path);
-void				add_fourmis_end(t_fourmis ***prems, t_fourmis *elem, int nb_path);
-void				deplace_fourmis(t_fourmis **f, t_salle **fin, t_salle **room);
+void				add_fourmis_end(t_fourmis ***prems,
+						t_fourmis *elem, int nb_path);
+void				deplace_fourmis(t_fourmis **f,
+						t_salle **fin, t_salle **room);
 void				pass_fourmis(t_salle *room, t_allp *path, int nb_f);
 int					verif_tri(t_allp *p);
 void				tri_path(t_allp **p);
@@ -94,7 +95,8 @@ void				print_lst(t_file *lst);
 t_file				*file_new(char *str, char *flag);
 void				add_end_lst(t_file **str, t_file *elem);
 t_salle				*new_hall(char *name, char *flag, t_salle *next, int id);
-int					verif_hall_tun(char *str);
+int					verif_hall(char *str);
+int					verif_tun(char *str);
 t_salle				*config(t_file *hall, t_file *tunnel);
 void				assign_tun(t_salle *room, t_file *tunnel, int halllen);
 t_salle				*init_map(int nb_f);
