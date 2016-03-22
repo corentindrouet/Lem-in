@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 09:16:52 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/21 15:31:29 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/22 09:23:52 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,19 @@ void	add_path_end(t_path **lst, t_path *new)
 {
 	t_path	*tmp;
 
-	tmp = *lst;
-	if (!tmp)
+	write(1, "o", 1);
+	if (!(*lst))
+	{
 		*lst = new;
+	}
 	else
 	{
+		tmp = *lst;
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new;
 	}
+	write(1, "h", 1);
 }
 
 int		nb_next(t_stap *st, t_salle *room)
@@ -105,19 +109,25 @@ int		recur_path(t_stap *st, t_path **pat, t_salle **room, t_allp **pt)
 	i = nb_next(st, *room);
 	add_path_end(pat, new_path((*room)->name));
 	t = (*pat)->next;
-	tmp = (t_path**)malloc(sizeof(t_path*) * (i + 1));
-	while (i >= 0)
-		tmp[i--] = NULL;
+	if (!ft_strcmp((*room)->flag, "start"))
+		return (0);
 	if (!ft_strcmp((*room)->flag, "end"))
 		return (1);
 	if (!nb_next(st, *room) || !ft_strcmp((*room)->flag, "start")
 		|| (*room)->pass == 1 || !verif_d(*pt, (*room)->name))
 		return (0);
+	tmp = (t_path**)malloc(sizeof(t_path*) * (i + 1));
+	while (i >= 0)
+		tmp[i--] = NULL;
 	while (!(*room)->hall[i])
 		i++;
-	if (nb_next(st, *room) == 1)
-		return (recur_path(st, &t, &((*room)->hall[i]), pt));
 	(*room)->pass = 1;
+	if (nb_next(st, *room) == 1)
+	{
+		i = recur_path(st, &t, &((*room)->hall[i]), pt);
+		(*room)->pass = 0;
+		return (i);
+	}
 	p = 0;
 	i = -1;
 	while (++i < st->nb_room)
@@ -222,9 +232,12 @@ int		search_all_path(t_stap st, t_allp **pat, t_salle **room)
 			{
 				if (!recur_path(&st, &(tmp->path),
 					&((*room)->hall[k]), &opti[j]))
+				{
 					tmp = free_allp(&tmp, &opti[j]);
+				}
 				else
 				{
+//					add_allp_end(&tmp, new_allp(tmp->path));
 					verif_bouchon(&opti[j]);
 					tmp = tmp->next;
 				}
