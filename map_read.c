@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 09:37:54 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/22 11:56:53 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/22 13:18:54 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	assign_tun(t_salle *room, t_file *tunnel, int halllen)
 	char	***tun;
 	int		i;
 	int		len_tunnel;
-	t_salle	*start;
 
 	len_tunnel = lst_len(tunnel);
 	tun = (char***)malloc(sizeof(char**) * (len_tunnel + 1));
@@ -60,24 +59,7 @@ void	assign_tun(t_salle *room, t_file *tunnel, int halllen)
 		}
 		tunnel = tunnel->next;
 	}
-	start = room;
-	while (room)
-	{
-		i = 0;
-		room->hall = (t_salle**)malloc(sizeof(t_salle*) * (halllen + 1));
-		while (i <= halllen)
-			room->hall[i++] = NULL;
-		i = 0;
-		while (tun[i])
-		{
-			if (!ft_strcmp(tun[i][0], room->name))
-				room->hall[id_lst(start, tun[i][1])] = p_lst(start, tun[i][1]);
-			else if (!ft_strcmp(tun[i][1], room->name))
-				room->hall[id_lst(start, tun[i][0])] = p_lst(start, tun[i][0]);
-			i++;
-		}
-		room = room->next;
-	}
+	assign_room(room, tun, halllen);
 }
 
 t_salle	*config(t_file *hall, t_file *tunnel)
@@ -123,49 +105,26 @@ void	affiche_all(t_file *hall, t_file *tun, int nb_f)
 	}
 }
 
-t_salle	*init_map(int nb_f)
+t_salle	*init_map(void)
 {
-	t_file	*hall;
-	t_file	*tunnel;
 	int		ret;
 	int		i;
 	char	*str;
-	char	*tmpflag;
-	t_file	*stop;
+	t_init	ini;
 
-	hall = NULL;
-	tunnel = NULL;
+	ini.hall = NULL;
+	ini.tunnel = NULL;
 	i = 0;
-	stop = NULL;
+	ini.stop = NULL;
 	while ((ret = get_next_line(0, &str)) > 0)
 	{
 		if (!(str[0] == '#' && str[1] != '#'))
-		{
-			if (str[0] == '#' && str[1] == '#')
-			{
-				tmpflag = &str[2];
-				if (!ft_strcmp(&str[2], "start"))
-				{
-					i++;
-					if ((ret = get_next_line(0, &str)) > 0)
-						add_start_lst(&hall, file_new(str, tmpflag));
-				}
-				else if (!ft_strcmp(&str[2], "end"))
-					if ((ret = get_next_line(0, &str)) > 0)
-						stop = file_new(str, tmpflag);
-			}
-			else if (verif_hall(str) == 1)
-				add_end_lst(&hall, file_new(str, NULL));
-			else if (verif_tun(str) == 1)
-				add_end_lst(&tunnel, file_new(str, NULL));
-			else
+			if (!no_comment_line(str, &ini, &ret, &i))
 				break ;
-		}
 		free(str);
 	}
-	add_end_lst(&hall, stop);
-	affiche_all(hall, tunnel, nb_f);
-	if (ret == -1 || i != 1 || !stop)
+	add_end_lst(&(ini.hall), ini.stop);
+	if (ret == -1 || i != 1 || !ini.stop)
 		return (NULL);
-	return (config(hall, tunnel));
+	return (config(ini.hall, ini.tunnel));
 }

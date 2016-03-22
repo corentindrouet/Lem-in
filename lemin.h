@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/22 11:49:51 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/22 13:36:09 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,18 @@ typedef struct		s_stap
 	int				nb_room;
 }					t_stap;
 
+typedef struct		s_init
+{
+	t_file			*hall;
+	t_file			*tunnel;
+	t_file			*stop;
+}					t_init;
+
+int					verif_fin(t_salle **room, t_stap *st, t_allp **pt);
+int					verif_d(t_allp *pt, char *name);
+int					no_comment_line(char *str, t_init *ini, int *ret, int *i);
+void				commande(char *str, t_init *ini, int *i, int *ret);
+void				assign_room(t_salle *room, char ***tun, int halllen);
 t_fourmis			**init_fourmis(int nb_f, t_allp *path);
 t_path				*path_index(t_allp *path, int i_fourmis);
 t_fourmis			*new_fourmis(int id, t_path *path);
@@ -99,7 +111,7 @@ int					verif_hall(char *str);
 int					verif_tun(char *str);
 t_salle				*config(t_file *hall, t_file *tunnel);
 void				assign_tun(t_salle *room, t_file *tunnel, int halllen);
-t_salle				*init_map(int nb_f);
+t_salle				*init_map(void);
 int					lst_len(t_file *lst);
 t_salle				*p_lst(t_salle *room, char *str);
 int					id_lst(t_salle *room, char *str);

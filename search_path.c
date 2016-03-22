@@ -6,95 +6,23 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 09:16:52 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/22 10:56:30 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/22 13:44:48 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
-#include <stdio.h>
 
-t_path	*new_path(char *name)
+int		search_i(t_salle *room, int i)
 {
-	t_path	*ne;
+	int		j;
 
-	if ((ne = (t_path*)malloc(sizeof(t_path))) == NULL)
-		return (NULL);
-	if ((ne->name = ft_strnew(sizeof(char) * (ft_strlen(name) + 1))) == NULL)
-		return (NULL);
-	ft_strcpy(ne->name, name);
-	ne->next = NULL;
-	return (ne);
-}
-
-void	add_path_end(t_path **lst, t_path *new)
-{
-	t_path	*tmp;
-
-	if (!(*lst))
+	j = -1;
+	while (i)
 	{
-		*lst = new;
+		if (room->hall[++j])
+			i--;
 	}
-	else
-	{
-		tmp = *lst;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
-}
-
-int		nb_next(t_stap *st, t_salle *room)
-{
-	int	i;
-	int	len;
-	int	compt;
-
-	len = st->nb_room;
-	i = -1;
-	compt = 0;
-	while (++i < len)
-	{
-		if (room->hall[i])
-			compt++;
-	}
-	return (compt);
-}
-
-int		verif_p(t_path *p, char *name, int len)
-{
-	t_path	*tmp;
-	int		i;
-
-	tmp = p;
-	i = 0;
-	while (tmp->next)
-	{
-		if (!ft_strcmp(tmp->name, name) && i < len)
-			return (0);
-		tmp = tmp->next;
-		i++;
-	}
-	return (1);
-}
-
-int		verif_d(t_allp *pt, char *name)
-{
-	t_allp	*tmp;
-	t_allp	*last;
-
-	tmp = pt;
-	last = pt;
-	if (!tmp || !(tmp->next))
-		return (1);
-	while (last->next)
-		last = last->next;
-	while (tmp->next)
-	{
-		if (!verif_p(tmp->path, name, path_len(last->path)))
-			return (0);
-		tmp = tmp->next;
-	}
-	return (1);
+	return (j);
 }
 
 int		recur_path(t_stap *st, t_path **pat, t_salle **room, t_allp **pt)
@@ -107,40 +35,29 @@ int		recur_path(t_stap *st, t_path **pat, t_salle **room, t_allp **pt)
 	i = nb_next(st, *room);
 	add_path_end(pat, new_path((*room)->name));
 	t = (*pat)->next;
-	if (!ft_strcmp((*room)->flag, "start"))
-		return (0);
-	if (!ft_strcmp((*room)->flag, "end"))
-		return (1);
-	if (!nb_next(st, *room) || !ft_strcmp((*room)->flag, "start")
-		|| (*room)->pass == 1 || !verif_d(*pt, (*room)->name))
-		return (0);
+	if ((p = verif_fin(room, st, pt)) != -1)
+		return (p);
 	tmp = (t_path**)malloc(sizeof(t_path*) * (i + 1));
 	while (i >= 0)
 		tmp[i--] = NULL;
-	while (!(*room)->hall[i])
-		i++;
 	(*room)->pass = 1;
 	if (nb_next(st, *room) == 1)
 	{
-		i = recur_path(st, &t, &((*room)->hall[i]), pt);
+		i = recur_path(st, &t, &((*room)->hall[search_i(*room, 1)]), pt);
 		(*room)->pass = 0;
 		return (i);
 	}
 	p = 0;
 	i = -1;
 	while (++i < st->nb_room)
-	{
 		if ((*room)->hall[i] && !(*room)->hall[i]->pass)
 		{
 			if (recur_path(st, &t, &((*room)->hall[i]), pt))
-			{
 				tmp[p++] = t->next;
-			}
 			else
 				free_path(&t);
 			t->next = NULL;
 		}
-	}
 	(*room)->pass = 0;
 	if (tmp[0] == NULL)
 		return (0);
@@ -164,19 +81,6 @@ t_allp	*opti_path(t_allp ***o)
 			max = allp_len((*o)[i]);
 		}
 	return (ret);
-}
-
-int		search_i(t_salle *room, int i)
-{
-	int		j;
-
-	j = -1;
-	while (i)
-	{
-		if (room->hall[++j])
-			i--;
-	}
-	return (j);
 }
 
 int		search_all_path(t_stap st, t_allp **pat, t_salle **room)

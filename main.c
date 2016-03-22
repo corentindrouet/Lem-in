@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:23:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/22 11:38:51 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/22 13:17:21 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int		main(void)
 	if (get_next_line(0, &ptr) <= 0)
 		return (0);
 	nbr_f = ((int)ft_strlen(ptr) <= 13) ? ft_atol(ptr) : -1;
-	if (!(h = init_map(nbr_f)) || nbr_f <= 0 || nbr_f >= 2147483648)
+	if (!(h = init_map()) || nbr_f <= 0 || nbr_f >= 2147483648)
 		exit_error("Error\n");
 	h = reverse_lst(h);
 	st.start = find_flag(h, "start");
