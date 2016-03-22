@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:23:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/21 15:32:00 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/22 11:28:41 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,24 +65,32 @@ void	affiche_allp(t_allp *p)
 	}
 }
 
+void	exit_error(char *str)
+{
+	write(1, str, ft_strlen(str));
+	exit(0);
+}
+
 int		main(void)
 {
 	t_salle	*h;
-	int		nbr_f;
+	long	nbr_f;
 	char	*ptr;
 	t_allp	*all_path;
 	t_stap	st;
 
 	if (get_next_line(0, &ptr) <= 0)
 		return (0);
-	nbr_f = ft_atoi(ptr);
-	h = init_map(nbr_f);
+	nbr_f = ((int)ft_strlen(ptr) <= 13) ? ft_atol(ptr) : -1;
+	if (!(h = init_map(nbr_f)) || nbr_f <= 0 || nbr_f >= 2147483648)
+		exit_error("Error\n");
 	h = reverse_lst(h);
 	st.start = find_flag(h, "start");
 	st.stop = find_flag(h, "end");
 	st.nb_room = salle_len(h);
 	all_path = NULL;
-	search_all_path(st, &all_path, &h);
+	if (!search_all_path(st, &all_path, &h))
+		exit_error("Error\n");
 	reinit_nb_hall(&all_path);
 	verif_bouchon(&all_path);
 	tri_path(&all_path);

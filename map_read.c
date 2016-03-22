@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 09:37:54 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/18 10:39:46 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/22 11:27:43 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,45 @@ int		verif_hall_tun(char *str)
 {
 	int	i;
 	int nb;
+	int	j;
+	char	**split;
 
-	if (!ft_strchr(str, ' '))
-		return (1);
-	nb = 0;
-	i = 0;
-	while (str[i])
-		if (str[i++] == ' ')
-			nb++;
-	if (nb == 2)
-		return (0);
+	if (ft_strchr(str, ' '))
+	{
+		split = ft_strsplit(str, ' ');
+		nb = 0;
+		i = 0;
+		while (str[i])
+			if (str[i++] == ' ')
+				nb++;
+		i = 0;
+		while (split[i])
+			i++;
+		j = -1;
+		while (split[++j])
+			free(split[j]);
+		free(split);
+		if (nb == 2 && i == 3)
+			return (0);
+	} 
+	else if (ft_strchr(str, '-'))
+	{
+		split = ft_strsplit(str, '-');
+		nb = 0;
+		i = 0;
+		while (str[i])
+			if (str[i++] == '-')
+				nb++;
+		i = 0;
+		while (split[i])
+			i++;
+		j = 0;
+		while (split[++j])
+			free(split[j]);
+		free(split);
+		if (nb == 1 && i == 2)
+			return (1);
+	}
 	return (-1);
 }
 
@@ -43,6 +72,11 @@ void	assign_tun(t_salle *room, t_file *tunnel, int halllen)
 	while (tunnel)
 	{
 		tun[i++] = ft_strsplit(tunnel->str, '-');
+		if (!ft_strcmp(tun[i - 1][0], tun[i - 1][1]))
+		{
+			free(tun[i]);
+			tun[i--] = NULL;
+		}
 		tunnel = tunnel->next;
 	}
 	start = room;
@@ -53,7 +87,7 @@ void	assign_tun(t_salle *room, t_file *tunnel, int halllen)
 		while (i <= halllen)
 			room->hall[i++] = NULL;
 		i = 0;
-		while (i < len_tunnel)
+		while (tun[i])
 		{
 			if (!ft_strcmp(tun[i][0], room->name))
 				room->hall[id_lst(start, tun[i][1])] = p_lst(start, tun[i][1]);
@@ -92,7 +126,7 @@ t_salle	*config(t_file *hall, t_file *tunnel)
 
 void	affiche_all(t_file *hall, t_file *tun, int nb_f)
 {
-	ft_putnbr(nb_f);
+	ft_printf("%ld", nb_f);
 	write(1, "\n", 1);
 	while (hall)
 	{
@@ -113,12 +147,15 @@ t_salle	*init_map(int nb_f)
 	t_file	*hall;
 	t_file	*tunnel;
 	int		ret;
+	int		i;
 	char	*str;
 	char	*tmpflag;
 	t_file	*stop;
 
 	hall = NULL;
 	tunnel = NULL;
+	i = 0;
+	stop = NULL;
 	while ((ret = get_next_line(0, &str)) > 0)
 	{
 		if (!(str[0] == '#' && str[1] != '#'))
@@ -128,6 +165,7 @@ t_salle	*init_map(int nb_f)
 				tmpflag = &str[2];
 				if (!ft_strcmp(&str[2], "start"))
 				{
+					i++;
 					if ((ret = get_next_line(0, &str)) > 0)
 						add_start_lst(&hall, file_new(str, tmpflag));
 				}
@@ -146,7 +184,7 @@ t_salle	*init_map(int nb_f)
 	}
 	add_end_lst(&hall, stop);
 	affiche_all(hall, tunnel, nb_f);
-	if (ret == -1)
+	if (ret == -1 || i != 1 || !stop)
 		return (NULL);
 	return (config(hall, tunnel));
 }

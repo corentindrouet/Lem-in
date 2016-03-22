@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 09:16:52 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/22 09:23:52 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/22 10:56:30 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	add_path_end(t_path **lst, t_path *new)
 {
 	t_path	*tmp;
 
-	write(1, "o", 1);
 	if (!(*lst))
 	{
 		*lst = new;
@@ -42,7 +41,6 @@ void	add_path_end(t_path **lst, t_path *new)
 			tmp = tmp->next;
 		tmp->next = new;
 	}
-	write(1, "h", 1);
 }
 
 int		nb_next(t_stap *st, t_salle *room)
@@ -132,7 +130,7 @@ int		recur_path(t_stap *st, t_path **pat, t_salle **room, t_allp **pt)
 	i = -1;
 	while (++i < st->nb_room)
 	{
-		if ((*room)->hall[i])
+		if ((*room)->hall[i] && !(*room)->hall[i]->pass)
 		{
 			if (recur_path(st, &t, &((*room)->hall[i]), pt))
 			{
@@ -188,6 +186,7 @@ int		search_all_path(t_stap st, t_allp **pat, t_salle **room)
 	int		k;
 	int		lenroom;
 	int		nb_path;
+	int		p;
 	t_allp	*tmp;
 	t_allp	**opti;
 
@@ -216,12 +215,13 @@ int		search_all_path(t_stap st, t_allp **pat, t_salle **room)
 	opti[i] = NULL;
 	(*room)->pass = 1;
 	j = -1;
+	p = 0;
 	while (++j < nb_path)
 	{
 		i = search_i(*room, j + 1);
 		tmp = opti[j];
 		k = i - 1;
-		while (++k != (i - 1))
+		while (++k != (i - 1) && tmp)
 		{
 			if (k >= lenroom)
 			{
@@ -237,13 +237,15 @@ int		search_all_path(t_stap st, t_allp **pat, t_salle **room)
 				}
 				else
 				{
-//					add_allp_end(&tmp, new_allp(tmp->path));
 					verif_bouchon(&opti[j]);
 					tmp = tmp->next;
+					p++;
 				}
 			}
 		}
 	}
+	if (!p)
+		return (0);
 	*pat = opti_path(&opti);
-	return (0);
+	return (1);
 }

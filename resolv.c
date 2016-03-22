@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 10:59:48 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/21 15:32:05 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/22 10:21:56 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,6 @@ void	deplace_fourmis(t_fourmis **f, t_salle **fin, t_salle **room)
 	t_fourmis	*tmp;
 	t_salle		*tempo;
 
-/*	tmp = (*f);
-	tempo = *room;
-	while (tempo && ft_strcmp(tempo->name, tmp->path->name))
-		tempo = tempo->next;
-	tempo->pass = 0;
-	tempo = *room;
-	tmp->path = tmp->path->next;
-	while (tempo && ft_strcmp(tempo->name, tmp->path->name))
-		tempo = tempo->next;
-	if (tempo->pass)
-		return ;
-	if (!tempo->flag)
-		tempo->pass = 1;
-	if (!ft_strcmp(tmp->path->name, (*fin)->name))
-	{
-		tmp->arrive++;
-		(*fin)->pass++;
-	}*/
 	tmp = *f;
 	tempo = *room;
 	if (!ft_strcmp(tmp->path->next->name, (*fin)->name))
