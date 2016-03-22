@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 09:16:52 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/22 13:44:48 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/22 14:14:40 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int		recur_path(t_stap *st, t_path **pat, t_salle **room, t_allp **pt)
 	t_path	**tmp;
 	t_path	*t;
 
-	i = nb_next(st, *room);
 	add_path_end(pat, new_path((*room)->name));
-	t = (*pat)->next;
 	if ((p = verif_fin(room, st, pt)) != -1)
 		return (p);
+	i = nb_next(st, *room);
+	t = (*pat)->next;
 	tmp = (t_path**)malloc(sizeof(t_path*) * (i + 1));
 	while (i >= 0)
 		tmp[i--] = NULL;
