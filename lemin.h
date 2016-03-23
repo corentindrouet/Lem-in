@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/23 10:38:25 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/23 13:03:13 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct		s_init
 	t_file			*stop;
 }					t_init;
 
+void				aff(t_allp *path);
 int					nb_valid_next(t_stap *st, t_salle *room);
 int					s_i_valid(t_salle *room, int i, t_stap *st);
 int					recur_path(t_stap *st, t_path **pat,
@@ -93,7 +94,7 @@ void				free_elem(t_allp **al, t_allp *elem);
 int					verif_bouchon(t_allp **all_path);
 int					allp_len(t_allp *lst);
 void				reinit_nb_hall(t_allp **all_path);
-t_allp				*free_allp(t_allp **p, t_allp **start);
+t_allp				*free_allp(t_allp **p, t_allp ***start, int j);
 int					nb_next(t_stap *st, t_salle *room);
 int					recur_path(t_stap *st,
 						t_path **pat, t_salle **room, t_allp **pt);

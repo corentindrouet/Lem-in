@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 09:16:52 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/23 11:01:09 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/23 13:17:16 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,13 @@ int		recur_path(t_stap *st, t_path **pat, t_salle **room, t_allp **pt)
 	(*room)->pass = 1;
 	if (nb_valid_next(st, *room) == 1)
 	{
-	ft_printf("%s-%s\n", (*room)->name, (*room)->hall[s_i_valid(*room, 1, st)]->name);
+//	ft_printf("%s-%s\n", (*room)->name, (*room)->hall[s_i_valid(*room, 1, st)]->name);
 		p = recur_path(st, &t, &((*room)->hall[s_i_valid(*room, 1, st)]), pt);
 		if (!p)
+		{
 			free_path(&t);
+			t->next = NULL;
+		}
 		(*room)->pass = 0;
 		return (p);
 	}
@@ -115,7 +118,9 @@ int		search_all_path(t_stap st, t_allp **pat, t_salle **room)
 			{
 				if (!recur_path(&st, &(tmp->path),
 					&((*room)->hall[k]), &opti[j]))
-					tmp = free_allp(&tmp, &opti[j]);
+				{
+					tmp = free_allp(&tmp, &opti, j);
+				}
 				else
 				{
 					verif_bouchon(&opti[j]);

@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 08:39:34 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/18 10:35:37 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/23 13:17:01 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,26 @@ void	free_path(t_path **p)
 	}
 }
 
-t_allp	*free_allp(t_allp **p, t_allp **start)
+t_allp	*free_allp(t_allp **p, t_allp ***start, int j)
 {
 	t_allp	*tmp;
-	t_allp	*par;
+	t_allp	**par;
 
-	par = *start;
-	if (par == (*p))
+	par = (*start);
+	if (par[j] == (*p))
 	{
 		tmp = (*p)->next;
 		free(*p);
+		par[j] = tmp;
 		return (tmp);
 	}
-	while (par->next != (*p) && par->next)
-		par = par->next;
-	tmp = par->next;
-	if (par->next)
-		par->next = par->next->next;
+	while (par[j]->next != (*p) && par[j]->next)
+		par[j] = par[j]->next;
+	tmp = par[j]->next;
+	if (par[j]->next)
+		par[j]->next = par[j]->next->next;
 	free(tmp);
-	return (par->next);
+	return (par[j]->next);
 }
 
 t_allp	*new_allp(t_path *p)
