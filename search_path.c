@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 09:16:52 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/23 13:17:16 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/23 16:33:27 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int		recur_path(t_stap *st, t_path **pat, t_salle **room, t_allp **pt)
 	(*room)->pass = 1;
 	if (nb_valid_next(st, *room) == 1)
 	{
-//	ft_printf("%s-%s\n", (*room)->name, (*room)->hall[s_i_valid(*room, 1, st)]->name);
 		p = recur_path(st, &t, &((*room)->hall[s_i_valid(*room, 1, st)]), pt);
 		if (!p)
 		{
@@ -70,45 +69,27 @@ t_allp	*opti_path(t_allp ***o)
 
 int		search_all_path(t_stap st, t_allp **pat, t_salle **room)
 {
+//	int		t[5];
 	int		i;
 	int		j;
 	int		k;
 	int		lenroom;
-	int		nb_path;
 	int		p;
 	t_allp	*tmp;
 	t_allp	**opti;
 
-	i = -1;
 	lenroom = salle_len(*room);
-	nb_path = 0;
-	while (++i < lenroom)
-		if ((*room)->hall[i])
-		{
-			if (!strcmp((*room)->flag, "start"))
-				add_allp_end(pat, new_allp(new_path((*room)->name)));
-			nb_path++;
-		}
-	opti = (t_allp**)malloc(sizeof(t_allp*) * (nb_path + 1));
-	i = -1;
-	while (++i < nb_path)
-	{
-		j = -1;
-		while (++j < lenroom)
-			if ((*room)->hall[j])
-				if (!strcmp((*room)->flag, "start"))
-					add_allp_end(&opti[i], new_allp(new_path((*room)->name)));
-	}
-	opti[i] = NULL;
+	init_all_path(st, *room, &opti);
+	ft_putnbr(lenroom);
 	(*room)->pass = 1;
 	j = -1;
 	p = 0;
-	while (++j < nb_path)
+	while (++j < nb_next(&st, *room))
 	{
 		i = search_i(*room, j + 1);
 		tmp = opti[j];
-		k = i - 1;
-		while (++k != (i - 1) && tmp)
+		k = (i - 1);
+		while ((++k != (i - 1)) && tmp)
 			if (k >= lenroom)
 			{
 				k = -1;

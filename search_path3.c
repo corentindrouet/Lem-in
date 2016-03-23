@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 13:24:49 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/23 12:03:30 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/23 14:41:05 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ int		multi_path(t_stap *st, t_path **pat, t_salle **room, t_allp **pt)
 		tmp[i--] = NULL;
 	p = 0;
 	while (++i < nb_valid_next(st, *room))
-		if ((*room)->hall[s_i_valid(*room, i + 1, st)] && !(*room)->hall[s_i_valid(*room, i + 1, st)]->pass)
-		{
-			if (recur_path(st, &t, &((*room)->hall[s_i_valid(*room, i + 1, st)]), pt))
-				tmp[p++] = t->next;
-			else
-				free_path(&t);
-			t->next = NULL;
-		}
+	{
+		if (recur_path(st, &t,
+			&((*room)->hall[s_i_valid(*room, i + 1, st)]), pt))
+			tmp[p++] = t->next;
+		else
+			free_path(&t);
+		t->next = NULL;
+	}
 	(*room)->pass = 0;
 	if (tmp[0] == NULL)
 		return (0);

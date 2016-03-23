@@ -6,34 +6,33 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 12:04:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/22 13:17:35 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/23 16:31:37 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-void	assign_room(t_salle *room, char ***tun, int halllen)
+void	assign_room(t_salle **room, char ***tun, int halllen)
 {
 	t_salle	*start;
+	t_salle	*tmp;
 	int		i;
 
-	start = room;
-	while (room)
+	(void)halllen;
+	start = *room;
+	tmp = *room;
+	while (tmp)
 	{
-		i = 0;
-		room->hall = (t_salle**)malloc(sizeof(t_salle*) * (halllen + 1));
-		while (i <= halllen)
-			room->hall[i++] = NULL;
 		i = 0;
 		while (tun[i])
 		{
-			if (!ft_strcmp(tun[i][0], room->name))
-				room->hall[id_lst(start, tun[i][1])] = p_lst(start, tun[i][1]);
-			else if (!ft_strcmp(tun[i][1], room->name))
-				room->hall[id_lst(start, tun[i][0])] = p_lst(start, tun[i][0]);
+			if (!ft_strcmp(tun[i][0], tmp->name))
+				tmp->hall[id_lst(start, tun[i][1])] = p_lst(start, tun[i][1]);
+			else if (!ft_strcmp(tun[i][1], tmp->name))
+				tmp->hall[id_lst(start, tun[i][0])] = p_lst(start, tun[i][0]);
 			i++;
 		}
-		room = room->next;
+		tmp = tmp->next;
 	}
 }
 
@@ -53,15 +52,17 @@ int		no_comment_line(char *str, t_init *ini, int *ret, int *i)
 void	commande(char *str, t_init *ini, int *i, int *ret)
 {
 	char	*tmpflag;
+	char	*tmp;
 
 	tmpflag = &str[2];
 	if (!ft_strcmp(&str[2], "start"))
 	{
 		(*i)++;
-		if (((*ret) = get_next_line(0, &str)) > 0)
-			add_start_lst(&(ini->hall), file_new(str, tmpflag));
+		if (((*ret) = get_next_line(0, &tmp)) > 0)
+			add_start_lst(&(ini->hall), file_new(tmp, tmpflag));
+		free(tmp);
 	}
 	else if (!ft_strcmp(&str[2], "end"))
-		if (((*ret) = get_next_line(0, &str)) > 0)
-			ini->stop = file_new(str, tmpflag);
+		if (((*ret) = get_next_line(0, &tmp)) > 0)
+			ini->stop = file_new(tmp, tmpflag);
 }

@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 09:37:54 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/22 13:18:54 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/23 16:30:15 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		verif_hall(char *str)
 	return (-1);
 }
 
-void	assign_tun(t_salle *room, t_file *tunnel, int halllen)
+void	assign_tun(t_salle **room, t_file *tunnel, int halllen)
 {
 	char	***tun;
 	int		i;
@@ -54,8 +54,8 @@ void	assign_tun(t_salle *room, t_file *tunnel, int halllen)
 		tun[i++] = ft_strsplit(tunnel->str, '-');
 		if (!ft_strcmp(tun[i - 1][0], tun[i - 1][1]))
 		{
-			free(tun[i]);
-			tun[i--] = NULL;
+			free(tun[--i]);
+			tun[i] = NULL;
 		}
 		tunnel = tunnel->next;
 	}
@@ -83,26 +83,8 @@ t_salle	*config(t_file *hall, t_file *tunnel)
 		hall = hall->next;
 		id++;
 	}
-	assign_tun(room, tunnel, halllen);
+	assign_tun(&room, tunnel, halllen);
 	return (room);
-}
-
-void	affiche_all(t_file *hall, t_file *tun, int nb_f)
-{
-	ft_printf("%ld", nb_f);
-	write(1, "\n", 1);
-	while (hall)
-	{
-		if (hall->flag)
-			ft_printf("##%s\n", hall->flag);
-		ft_printf("%s\n", hall->str);
-		hall = hall->next;
-	}
-	while (tun)
-	{
-		ft_printf("%s\n", tun->str);
-		tun = tun->next;
-	}
 }
 
 t_salle	*init_map(void)
