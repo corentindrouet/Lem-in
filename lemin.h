@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/22 13:36:09 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/23 10:38:25 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ typedef struct		s_init
 	t_file			*stop;
 }					t_init;
 
+int					nb_valid_next(t_stap *st, t_salle *room);
+int					s_i_valid(t_salle *room, int i, t_stap *st);
+int					recur_path(t_stap *st, t_path **pat,
+						t_salle **room, t_allp **pt);
+int					multi_path(t_stap *st, t_path **pat,
+						t_salle **room, t_allp **pt);
 int					verif_fin(t_salle **room, t_stap *st, t_allp **pt);
 int					verif_d(t_allp *pt, char *name);
 int					no_comment_line(char *str, t_init *ini, int *ret, int *i);

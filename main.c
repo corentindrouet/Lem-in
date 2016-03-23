@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:23:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/22 13:17:21 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/23 10:57:28 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,23 @@ void	exit_error(char *str)
 	exit(0);
 }
 
+void	aff(t_allp *path)
+{
+	t_path	*p;
+
+	while (path)
+	{
+		p = path->path;
+		while (p)
+		{
+			ft_printf("%s-", p->name);
+			p = p->next;
+		}
+		write(1, "\n", 1);
+		path = path->next;
+	}
+}
+
 int		main(void)
 {
 	t_salle	*h;
@@ -70,6 +87,7 @@ int		main(void)
 	all_path = NULL;
 	if (!search_all_path(st, &all_path, &h))
 		exit_error("Error\n");
+	aff(all_path);
 	reinit_nb_hall(&all_path);
 	verif_bouchon(&all_path);
 	tri_path(&all_path);
