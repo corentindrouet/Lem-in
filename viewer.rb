@@ -5,14 +5,21 @@ class Viewer < Gosu::Window
 	def initialize
 		super 640, 480
 		self.caption = "Viewer Lem-in"
-		@background_image = Gosu::Image.new("space.png")
+		@image = Gosu::Image.new("viewer_src/point.png")
 	end
 	def update
 	end
-	def draw
-		@background_image.draw(0, 0, 0)
+	def draw(@x, @y)
+		@image.draw(@x, @y, 0)
 	end
 end
 
 window = Viewer.new
+
+prout = gets
+while (prout != "\n")
+	
+	prout = gets
+end
+
 window.show
