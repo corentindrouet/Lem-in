@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:23:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/24 08:48:13 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/24 14:39:07 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,36 +51,19 @@ void	exit_error(char *str)
 	exit(0);
 }
 
-void	aff(t_allp *path)
-{
-	t_path	*p;
-
-	while (path)
-	{
-		p = path->path;
-		while (p)
-		{
-			ft_printf("%s-", p->name);
-			p = p->next;
-		}
-		write(1, "\n", 1);
-		path = path->next;
-	}
-}
-
 int		main(void)
 {
 	t_salle	*h;
-	long	nbr_f;
+	t_init	all;
 	char	*ptr;
 	t_allp	*all_path;
 	t_stap	st;
 
 	if (get_next_line(0, &ptr) <= 0)
 		return (0);
-	nbr_f = ((int)ft_strlen(ptr) <= 13) ? ft_atol(ptr) : -1;
+	all.nb_f = ((int)ft_strlen(ptr) <= 13) ? ft_atol(ptr) : -1;
 	free(ptr);
-	if (!(h = init_map()) || nbr_f <= 0 || nbr_f >= 2147483648)
+	if (!(h = init_map(&all)) || all.nb_f <= 0 || all.nb_f >= 2147483648)
 		exit_error("Error\n");
 	h = reverse_lst(h);
 	st.start = find_flag(h, "start");
@@ -89,10 +72,10 @@ int		main(void)
 	all_path = NULL;
 	if (!search_all_path(st, &all_path, &h))
 		exit_error("Error\n");
-	aff(all_path);
 	reinit_nb_hall(&all_path);
 	verif_bouchon(&all_path);
 	tri_path(&all_path);
-	pass_fourmis(h, all_path, nbr_f);
+	affiche(all);
+	pass_fourmis(h, all_path, all.nb_f);
 	return (0);
 }

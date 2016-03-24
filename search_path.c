@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 09:16:52 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/24 09:16:24 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/24 10:16:39 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ int		search_all_path(t_stap st, t_allp **pat, t_salle **room)
 					recur_ok(&opti[t[1]], &tmp, &t[3]);
 			}
 	}
-	if (!(t[3]))
-		return (0);
 	*pat = opti_path(&opti);
-	return (1);
+	return ((!t[3]) ? 0 : 1);
 }

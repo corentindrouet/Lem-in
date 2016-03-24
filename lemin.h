@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/24 09:10:07 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/24 14:38:52 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,11 @@ typedef struct		s_init
 {
 	t_file			*hall;
 	t_file			*tunnel;
+	long			nb_f;
 	t_file			*stop;
 }					t_init;
 
+void				affiche(t_init prout);
 void				end_room_hall(int *t);
 void				recur_ok(t_allp **o, t_allp **tmp, int *t);
 t_allp				**init_all_path(t_stap st, t_salle **room, int *t);
@@ -121,7 +123,7 @@ int					verif_hall(char *str);
 int					verif_tun(char *str);
 t_salle				*config(t_file *hall, t_file *tunnel);
 void				assign_tun(t_salle **room, t_file *tunnel, int halllen);
-t_salle				*init_map(void);
+t_salle				*init_map(t_init *ini);
 int					lst_len(t_file *lst);
 t_salle				*p_lst(t_salle *room, char *str);
 int					id_lst(t_salle *room, char *str);

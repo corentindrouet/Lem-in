@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 08:39:34 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/23 13:17:01 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/24 10:12:41 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ void	add_allp_end(t_allp **lst, t_allp *new)
 	t_allp	*tmp;
 
 	tmp = *lst;
-	if (!tmp)
+	if (!(*lst))
+	{
 		*lst = new;
+	}
 	else
 	{
 		while (tmp->next)

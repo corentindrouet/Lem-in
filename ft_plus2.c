@@ -6,11 +6,33 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 12:04:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/24 08:24:39 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/24 14:39:16 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
+
+void	affiche(t_init prout)
+{
+	t_file	*tmp;
+
+	ft_putnbr(prout.nb_f);
+	write(1, "\n", 1);
+	tmp = prout.hall;
+	while (tmp)
+	{
+		if (tmp->flag)
+			ft_printf("##%s\n", tmp->flag);
+		ft_putendl(tmp->str);
+		tmp = tmp->next;
+	}
+	tmp = prout.tunnel;
+	while (tmp)
+	{
+		ft_putendl(tmp->str);
+		tmp = tmp->next;
+	}
+}
 
 void	assign_room(t_salle **room, char ***tun, int halllen)
 {

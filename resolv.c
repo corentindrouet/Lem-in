@@ -6,18 +6,19 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 10:59:48 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/22 11:44:36 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/24 14:41:06 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-void	end_room(t_fourmis **f, t_salle **fin, t_salle **room)
+void	end_room(t_fourmis **f, t_salle **fin, t_salle **room, char **prout)
 {
 	t_fourmis	*tmp;
 	t_salle		*tempo;
 
 	tmp = *f;
+	*prout = "{rouge}L%d-%s {eoc}";
 	tempo = *room;
 	tmp->arrive++;
 	(*fin)->pass++;
@@ -30,13 +31,17 @@ void	deplace_fourmis(t_fourmis **f, t_salle **fin, t_salle **room)
 {
 	t_fourmis	*tmp;
 	t_salle		*tempo;
+	char		*prout;
 
 	tmp = *f;
 	tempo = *room;
+	prout = NULL;
 	if (!ft_strcmp(tmp->path->next->name, (*fin)->name))
-		end_room(f, fin, room);
+		end_room(f, fin, room, &prout);
 	else
 	{
+		prout = (!ft_strcmp(tmp->path->name, (*room)->name))
+			? "{vert}L%d-%s {eoc}" : "L%d-%s ";
 		while (ft_strcmp(tempo->name, tmp->path->next->name))
 			tempo = tempo->next;
 		if (tempo->pass)
@@ -48,7 +53,7 @@ void	deplace_fourmis(t_fourmis **f, t_salle **fin, t_salle **room)
 		tempo->pass = 0;
 	}
 	tmp->path = tmp->path->next;
-	ft_printf("L%d-%s ", tmp->id, tmp->path->name);
+	ft_printf(prout, tmp->id, tmp->path->name);
 }
 
 void	aff_fourmis(t_fourmis **f, int nb_f)

@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 09:37:54 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/24 09:26:24 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/24 14:35:13 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,12 @@ t_salle	*config(t_file *hall, t_file *tunnel)
 	return (room);
 }
 
-t_salle	*init_map(void)
+t_salle	*init_map(t_init *ini)
 {
 	int		ret;
 	int		i;
 	char	*str;
-	t_init	*ini;
 
-	ini = (t_init*)malloc(sizeof(init));
 	ini->hall = NULL;
 	ini->tunnel = NULL;
 	i = 0;

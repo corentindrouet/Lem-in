@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/23 14:42:17 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/24 09:29:42 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/24 10:12:54 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,16 @@ t_allp	**init_all_path(t_stap st, t_salle **room, int *t)
 
 	opti = (t_allp**)malloc(sizeof(t_allp*) * (nb_next(&st, *room) + 1));
 	i = -1;
+	while (++i <= nb_next(&st, *room))
+		opti[i] = NULL;
+	i = -1;
 	while (++i < nb_next(&st, *room))
 	{
 		j = -1;
 		while (++j < st.nb_room)
-		{
 			if ((*room)->hall[j])
 				if (!ft_strcmp((*room)->flag, "start"))
 					add_allp_end(&(opti[i]), new_allp(new_path((*room)->name)));
-		}
 	}
 	opti[i] = NULL;
 	(*room)->pass = 1;
