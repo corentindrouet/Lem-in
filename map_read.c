@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 09:37:54 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/23 16:30:15 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/24 08:16:10 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ void	assign_tun(t_salle **room, t_file *tunnel, int halllen)
 		tun[i++] = ft_strsplit(tunnel->str, '-');
 		if (!ft_strcmp(tun[i - 1][0], tun[i - 1][1]))
 		{
-			free(tun[--i]);
+			free(tun[--i][1]);
+			free(tun[i][0]);
+			free(tun[i]);
 			tun[i] = NULL;
 		}
 		tunnel = tunnel->next;
@@ -92,21 +94,22 @@ t_salle	*init_map(void)
 	int		ret;
 	int		i;
 	char	*str;
-	t_init	ini;
+	t_init	*ini;
 
-	ini.hall = NULL;
-	ini.tunnel = NULL;
+	ini = (t_init*)malloc(sizeof(init));
+	ini->hall = NULL;
+	ini->tunnel = NULL;
 	i = 0;
-	ini.stop = NULL;
+	ini->stop = NULL;
 	while ((ret = get_next_line(0, &str)) > 0)
 	{
 		if (!(str[0] == '#' && str[1] != '#'))
-			if (!no_comment_line(str, &ini, &ret, &i))
+			if (!no_comment_line(str, ini, &ret, &i))
 				break ;
 		free(str);
 	}
-	add_end_lst(&(ini.hall), ini.stop);
-	if (ret == -1 || i != 1 || !ini.stop)
+	add_end_lst(&(ini->hall), ini->stop);
+	if (ret == -1 || i != 1 || !ini->stop)
 		return (NULL);
-	return (config(ini.hall, ini.tunnel));
+	return (config(ini->hall, ini->tunnel));
 }

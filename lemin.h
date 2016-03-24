@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/23 16:32:36 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/24 08:47:58 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct		s_init
 	t_file			*stop;
 }					t_init;
 
-void				init_all_path(t_stap st, t_salle *room, t_allp ***opti);
+t_allp				**init_all_path(t_stap st, t_salle *room);
 void				aff(t_allp *path);
 int					nb_valid_next(t_stap *st, t_salle *room);
 int					s_i_valid(t_salle *room, int i, t_stap *st);

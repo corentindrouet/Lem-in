@@ -6,11 +6,12 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:23:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/23 15:24:08 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/24 08:48:13 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
+#include <stdio.h>
 
 int		salle_len(t_salle *room)
 {
@@ -78,6 +79,7 @@ int		main(void)
 	if (get_next_line(0, &ptr) <= 0)
 		return (0);
 	nbr_f = ((int)ft_strlen(ptr) <= 13) ? ft_atol(ptr) : -1;
+	free(ptr);
 	if (!(h = init_map()) || nbr_f <= 0 || nbr_f >= 2147483648)
 		exit_error("Error\n");
 	h = reverse_lst(h);

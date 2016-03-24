@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 12:04:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/23 16:31:37 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/24 08:24:39 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int		no_comment_line(char *str, t_init *ini, int *ret, int *i)
 	if (str[0] == '#' && str[1] == '#')
 		commande(str, ini, i, ret);
 	else if (verif_hall(str) == 1)
-		add_end_lst(&((*ini).hall), file_new(str, NULL));
+		add_end_lst(&(ini->hall), file_new(str, NULL));
 	else if (verif_tun(str) == 1)
-		add_end_lst(&((*ini).tunnel), file_new(str, NULL));
+		add_end_lst(&(ini->tunnel), file_new(str, NULL));
 	else
 		return (0);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 09:16:52 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/23 16:33:27 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/24 08:49:05 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,48 +69,41 @@ t_allp	*opti_path(t_allp ***o)
 
 int		search_all_path(t_stap st, t_allp **pat, t_salle **room)
 {
-//	int		t[5];
-	int		i;
-	int		j;
-	int		k;
-	int		lenroom;
-	int		p;
+	int		t[4];
 	t_allp	*tmp;
 	t_allp	**opti;
 
-	lenroom = salle_len(*room);
-	init_all_path(st, *room, &opti);
-	ft_putnbr(lenroom);
+	opti = init_all_path(st, *room);
 	(*room)->pass = 1;
-	j = -1;
-	p = 0;
-	while (++j < nb_next(&st, *room))
+	t[1] = -1;
+	t[3] = 0;
+	while (++t[1] < nb_next(&st, *room))
 	{
-		i = search_i(*room, j + 1);
-		tmp = opti[j];
-		k = (i - 1);
-		while ((++k != (i - 1)) && tmp)
-			if (k >= lenroom)
+		t[0] = search_i(*room, t[1] + 1);
+		tmp = opti[t[1]];
+		t[2] = (t[0] - 1);
+		while ((++t[2] != (t[0] - 1)) && tmp)
+			if (t[2] >= st.nb_room)
 			{
-				k = -1;
-				i++;
+				t[2] = -1;
+				t[0]++;
 			}
-			else if ((*room)->hall[k])
+			else if ((*room)->hall[t[2]])
 			{
 				if (!recur_path(&st, &(tmp->path),
-					&((*room)->hall[k]), &opti[j]))
+					&((*room)->hall[t[2]]), &opti[t[1]]))
 				{
-					tmp = free_allp(&tmp, &opti, j);
+					tmp = free_allp(&tmp, &opti, t[1]);
 				}
 				else
 				{
-					verif_bouchon(&opti[j]);
+					verif_bouchon(&opti[t[1]]);
 					tmp = tmp->next;
-					p++;
+					t[3]++;
 				}
 			}
 	}
-	if (!p)
+	if (!(t[3]))
 		return (0);
 	*pat = opti_path(&opti);
 	return (1);
