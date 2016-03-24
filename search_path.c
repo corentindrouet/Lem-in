@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 09:16:52 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/24 08:49:05 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/24 09:16:24 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,7 @@ int		search_all_path(t_stap st, t_allp **pat, t_salle **room)
 	t_allp	*tmp;
 	t_allp	**opti;
 
-	opti = init_all_path(st, *room);
-	(*room)->pass = 1;
-	t[1] = -1;
-	t[3] = 0;
+	opti = init_all_path(st, room, t);
 	while (++t[1] < nb_next(&st, *room))
 	{
 		t[0] = search_i(*room, t[1] + 1);
@@ -84,23 +81,14 @@ int		search_all_path(t_stap st, t_allp **pat, t_salle **room)
 		t[2] = (t[0] - 1);
 		while ((++t[2] != (t[0] - 1)) && tmp)
 			if (t[2] >= st.nb_room)
-			{
-				t[2] = -1;
-				t[0]++;
-			}
+				end_room_hall(t);
 			else if ((*room)->hall[t[2]])
 			{
 				if (!recur_path(&st, &(tmp->path),
 					&((*room)->hall[t[2]]), &opti[t[1]]))
-				{
 					tmp = free_allp(&tmp, &opti, t[1]);
-				}
 				else
-				{
-					verif_bouchon(&opti[t[1]]);
-					tmp = tmp->next;
-					t[3]++;
-				}
+					recur_ok(&opti[t[1]], &tmp, &t[3]);
 			}
 	}
 	if (!(t[3]))

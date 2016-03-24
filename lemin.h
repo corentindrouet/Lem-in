@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/24 08:47:58 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/24 09:10:07 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,6 @@ typedef struct		s_salle
 	struct s_salle	**hall;
 	struct s_salle	*next;
 }					t_salle;
-
-typedef struct		s_int
-{
-	int				i;
-	int				j;
-	int				k;
-	int				lenroom;
-	int				p;
-}					t_int;
 
 typedef struct		s_file
 {
@@ -75,7 +66,9 @@ typedef struct		s_init
 	t_file			*stop;
 }					t_init;
 
-t_allp				**init_all_path(t_stap st, t_salle *room);
+void				end_room_hall(int *t);
+void				recur_ok(t_allp **o, t_allp **tmp, int *t);
+t_allp				**init_all_path(t_stap st, t_salle **room, int *t);
 void				aff(t_allp *path);
 int					nb_valid_next(t_stap *st, t_salle *room);
 int					s_i_valid(t_salle *room, int i, t_stap *st);
