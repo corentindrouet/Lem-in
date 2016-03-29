@@ -2,24 +2,40 @@
 require 'gosu'
 
 class Viewer < Gosu::Window
-	attr_accessor :x, :y, :t, :tun, :fourmis, :nb_f, :temp
+	attr_accessor :x, :y, :t, :tun, :fourmis, :nb_f, :temp, :redr, :diff
 
-	def initialize
+	def initialize(n)
 		super 640, 480
 		self.caption = "Viewer Lem-in"
 		@f_img = Gosu::Image.new("viewer_src/ant.gif")
-		@x = 0
-		@y = 0
+		@x = []
+		@y = []
+		@redr = 1
 		@temp = 0
+		@nb_f = n
 		@fourmis = []
+		@diff = []
 	end
 	def update
 		id = 0
 		if (@temp >= 1)
+			i = 1 
+			while (i <= nb_f)
+				j = 0
+				while (fourmis[i] != t[j][0])
+					j += 1
+				end
+				if (t[j][1] != @x[i] || t[j][2] != @y[i])
+					diff[i][1] = ((@x[i].to_i * 20) - (t[j][1].to_i * 20)) - (((2 * @temp.to_i) * ((@x[i].to_i * 20) - (t[j][1].to_i * 20))) / 100)
+					diff[i][2] = ((@y[i].to_i * 20) - (t[j][2].to_i * 20)) - (((2 * @temp.to_i) * ((@y[i].to_i * 20) - (t[j][2].to_i * 20))) / 100)
+				end
+				i += 1
+			end
 			@temp += 1
-			if (@temp == 20)
+			if (@temp == 51)
 				@temp = 0
 			end
+			@redr = 1
 		end
 		if (@temp == 0 && Gosu::button_down?(Gosu::KbSpace))
 			@temp = 1
@@ -31,15 +47,39 @@ class Viewer < Gosu::Window
 				while (line[i])
 					line[i].slice!("L")
 					tmp = line[i].split("-")
+					j = 0
+					while (t[j][0] != fourmis[tmp[0].to_i])
+						j += 1
+					end
+					@x[tmp[0].to_i] = t[j][1]
+					@y[tmp[0].to_i] = t[j][2]
 					fourmis[tmp[0].to_i] = tmp[1]
 					i += 1
 				end
 			end
-			@y = 1
+			@redr = 1
 		end
 	end
 	def needs_redraw?
-		@y
+		@redr
+	end
+	def init_tab
+		i = 0
+		while (t[i] != "##start")
+			i += 1
+		end
+		i += 1
+		j = 1
+		while (j <= nb_f)
+			x[j] = t[i][1]
+			y[j] = t[i][2]
+			diff[j] = []
+			diff[j][0] = 0
+			diff[j][1] = 0
+			diff[j][2] = 0
+			fourmis[j] = t[i][0]
+			j += 1
+		end
 	end
 	def draw
 		i = 0
@@ -80,22 +120,21 @@ class Viewer < Gosu::Window
 				while (t[j][0] != fourmis[i])
 					j += 1
 				end
-				@f_img.draw(t[j][1].to_i * 20, t[j][2].to_i * 20, 0)
+				@f_img.draw((t[j][1].to_i * 20) + diff[i][1].to_i, (t[j][2].to_i * 20) + diff[i][2].to_i, 0)
 			end
 			i += 1
 		end
-		@y = 0
+		@redr = 0
 	end
 end
 
-window = Viewer.new
 
 prout = gets
 if (prout == "Error\n")
 	puts prout
 	Process.exit!(true)
 end
-window.nb_f = prout.to_i
+window = Viewer.new(prout.to_i)
 tab = []
 tabtun = []
 while (prout != "\n")
@@ -116,4 +155,5 @@ end
 
 window.t = tab
 window.tun = tabtun
+window.init_tab
 window.show
