@@ -2,19 +2,27 @@
 require 'gosu'
 
 class Viewer < Gosu::Window
-	attr_accessor :x, :y, :t, :tun, :fourmis, :nb_f
+	attr_accessor :x, :y, :t, :tun, :fourmis, :nb_f, :temp
 
 	def initialize
 		super 640, 480
 		self.caption = "Viewer Lem-in"
-		@f_img = Gosu::Image.new("viewer_src/fourmis.png")
+		@f_img = Gosu::Image.new("viewer_src/ant.gif")
 		@x = 0
 		@y = 0
+		@temp = 0
 		@fourmis = []
 	end
 	def update
 		id = 0
-		if (@x == 0 && Gosu::button_down?(Gosu::KbSpace))
+		if (@temp >= 1)
+			@temp += 1
+			if (@temp == 20)
+				@temp = 0
+			end
+		end
+		if (@temp == 0 && Gosu::button_down?(Gosu::KbSpace))
+			@temp = 1
 			re = gets
 			if (re != nil)
 				re = re.chomp(" \n")
@@ -27,11 +35,11 @@ class Viewer < Gosu::Window
 					i += 1
 				end
 			end
+			@y = 1
 		end
-		@x += 1
-		if (@x == 5)
-			@x = 0
-		end
+	end
+	def needs_redraw?
+		@y
 	end
 	def draw
 		i = 0
@@ -76,6 +84,7 @@ class Viewer < Gosu::Window
 			end
 			i += 1
 		end
+		@y = 0
 	end
 end
 
