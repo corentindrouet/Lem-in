@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 10:59:48 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/24 14:41:06 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/29 10:49:13 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	end_room(t_fourmis **f, t_salle **fin, t_salle **room, char **prout)
 	t_salle		*tempo;
 
 	tmp = *f;
-	*prout = "{rouge}L%d-%s {eoc}";
+//	*prout = "{rouge}L%d-%s {eoc}";
+	*prout = "L%d-%s ";
 	tempo = *room;
 	tmp->arrive++;
 	(*fin)->pass++;
@@ -41,7 +42,7 @@ void	deplace_fourmis(t_fourmis **f, t_salle **fin, t_salle **room)
 	else
 	{
 		prout = (!ft_strcmp(tmp->path->name, (*room)->name))
-			? "{vert}L%d-%s {eoc}" : "L%d-%s ";
+			? "L%d-%s " : "L%d-%s ";
 		while (ft_strcmp(tempo->name, tmp->path->next->name))
 			tempo = tempo->next;
 		if (tempo->pass)

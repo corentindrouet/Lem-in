@@ -7,23 +7,30 @@ class Viewer < Gosu::Window
 	def initialize
 		super 640, 480
 		self.caption = "Viewer Lem-in"
-		@f_img = Gosu::Image.new("viewer_src/")
+		@f_img = Gosu::Image.new("viewer_src/fourmis.png")
 		@x = 0
 		@y = 0
-		@fourmis = {}
+		@fourmis = []
 	end
 	def update
-		if (Gosu::kbSpace)
+		id = 0
+		if (@x == 0 && Gosu::button_down?(Gosu::KbSpace))
 			re = gets
-			re = re.chomp("\n")
-			line = re.split
-			i = 0
-			while (line[i])
-				line[i].slice!("L")
-				tmp = line[i].split("-")
-				j = 0
-				while (line)
+			if (re != nil)
+				re = re.chomp(" \n")
+				line = re.split
+				i = 0
+				while (line[i])
+					line[i].slice!("L")
+					tmp = line[i].split("-")
+					fourmis[tmp[0].to_i] = tmp[1]
+					i += 1
+				end
 			end
+		end
+		@x += 1
+		if (@x == 5)
+			@x = 0
 		end
 	end
 	def draw
@@ -58,9 +65,16 @@ class Viewer < Gosu::Window
 			message.draw((t[i][1].to_i * 20) + 5, t[i][2].to_i * 20, 0)
 			i += 1
 		end
-		i = 0
-		while (i < nb_f)
-			if
+		i = 1
+		while (i <= nb_f)
+			if (fourmis[i])
+				j = 0
+				while (t[j][0] != fourmis[i])
+					j += 1
+				end
+				@f_img.draw(t[j][1].to_i * 20, t[j][2].to_i * 20, 0)
+			end
+			i += 1
 		end
 	end
 end
