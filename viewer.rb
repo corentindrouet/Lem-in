@@ -33,6 +33,18 @@ class Viewer < Gosu::Window
 			end
 			@temp += 1
 			if (@temp == 51)
+				i = 1
+				while (i <= nb_f)
+					j = 0
+					while (fourmis[i] != t[j][0])
+						j += 1
+					end
+					if (t[j - 1] == "##end")
+						@x[i] = t[j][1]
+						@y[i] = t[j][2]
+					end
+					i += 1
+				end
 				@temp = 0
 			end
 			@redr = 1
@@ -57,7 +69,6 @@ class Viewer < Gosu::Window
 					i += 1
 				end
 			end
-			@redr = 1
 		end
 	end
 	def needs_redraw?
