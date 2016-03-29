@@ -1,20 +1,30 @@
 #!/usr/bin/ruby
 require 'gosu'
 
-class Fourmis
-	attr_accessor :act
-end
-
 class Viewer < Gosu::Window
-	attr_accessor :x, :y, :t, :tun
+	attr_accessor :x, :y, :t, :tun, :fourmis, :nb_f
 
 	def initialize
 		super 640, 480
 		self.caption = "Viewer Lem-in"
+		@f_img = Gosu::Image.new("viewer_src/")
 		@x = 0
 		@y = 0
+		@fourmis = {}
 	end
 	def update
+		if (Gosu::kbSpace)
+			re = gets
+			re = re.chomp("\n")
+			line = re.split
+			i = 0
+			while (line[i])
+				line[i].slice!("L")
+				tmp = line[i].split("-")
+				j = 0
+				while (line)
+			end
+		end
 	end
 	def draw
 		i = 0
@@ -48,6 +58,10 @@ class Viewer < Gosu::Window
 			message.draw((t[i][1].to_i * 20) + 5, t[i][2].to_i * 20, 0)
 			i += 1
 		end
+		i = 0
+		while (i < nb_f)
+			if
+		end
 	end
 end
 
@@ -58,7 +72,7 @@ if (prout == "Error\n")
 	puts prout
 	Process.exit!(true)
 end
-nb_f = prout.to_i
+window.nb_f = prout.to_i
 tab = []
 tabtun = []
 while (prout != "\n")
@@ -76,9 +90,6 @@ while (prout != "\n")
 	end
 	prout = gets
 end
-#while (prout != nil)
-	
-#end
 
 window.t = tab
 window.tun = tabtun
