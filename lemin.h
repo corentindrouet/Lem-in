@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/30 09:22:11 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/30 11:14:05 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int					multi_path(t_stap *st, t_path **pat,
 int					verif_fin(t_salle **room, t_stap *st, t_allp **pt);
 int					verif_d(t_allp *pt, char *name);
 int					no_comment_line(char *str, t_init *ini, int *ret, int *i);
-void				commande(char *str, t_init *ini, int *i, int *ret);
+int					commande(char *str, t_init *ini, int *i, int *ret);
 void				assign_room(t_salle **room, char ***tun, int halllen);
 t_fourmis			**init_fourmis(int nb_f, t_allp *path);
 t_path				*path_index(t_allp *path, int i_fourmis);
@@ -91,7 +91,8 @@ void				add_fourmis_end(t_fourmis ***prems,
 						t_fourmis *elem, int nb_path);
 void				deplace_fourmis(t_fourmis **f,
 						t_salle **fin, t_salle **room, int color);
-void				pass_fourmis(t_salle *room, t_allp *path, int nb_f, int color);
+void				pass_fourmis(t_salle *room,
+						t_allp *path, int nb_f, int color);
 int					verif_tri(t_allp *p);
 void				tri_path(t_allp **p);
 int					compar_path(t_path *p1, t_path *p2);
