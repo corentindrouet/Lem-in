@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 12:04:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/24 14:39:16 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/30 09:22:42 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ void	assign_room(t_salle **room, char ***tun, int halllen)
 		i = 0;
 		while (tun[i])
 		{
-			if (!ft_strcmp(tun[i][0], tmp->name))
+			if (!ft_strcmp(tun[i][0], tmp->name)
+				&& id_lst(start, tun[i][1]) != -1)
 				tmp->hall[id_lst(start, tun[i][1])] = p_lst(start, tun[i][1]);
-			else if (!ft_strcmp(tun[i][1], tmp->name))
+			else if (!ft_strcmp(tun[i][1], tmp->name)
+				&& id_lst(start, tun[i][0]) != -1)
 				tmp->hall[id_lst(start, tun[i][0])] = p_lst(start, tun[i][0]);
 			i++;
 		}
@@ -85,6 +87,10 @@ void	commande(char *str, t_init *ini, int *i, int *ret)
 		free(tmp);
 	}
 	else if (!ft_strcmp(&str[2], "end"))
+	{
 		if (((*ret) = get_next_line(0, &tmp)) > 0)
 			ini->stop = file_new(tmp, tmpflag);
+	}
+	else if (!ft_strcmp(&str[2], "color"))
+		ini->color = 1;
 }

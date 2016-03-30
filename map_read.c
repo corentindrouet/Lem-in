@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 09:37:54 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/24 14:35:13 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/30 09:22:08 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ t_salle	*init_map(t_init *ini)
 
 	ini->hall = NULL;
 	ini->tunnel = NULL;
+	ini->color = 0;
 	i = 0;
 	ini->stop = NULL;
 	while ((ret = get_next_line(0, &str)) > 0)

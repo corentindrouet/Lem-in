@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 08:25:19 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/24 14:38:52 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/30 09:22:11 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct		s_init
 {
 	t_file			*hall;
 	t_file			*tunnel;
+	int				color;
 	long			nb_f;
 	t_file			*stop;
 }					t_init;
@@ -89,8 +90,8 @@ t_fourmis			*new_fourmis(int id, t_path *path);
 void				add_fourmis_end(t_fourmis ***prems,
 						t_fourmis *elem, int nb_path);
 void				deplace_fourmis(t_fourmis **f,
-						t_salle **fin, t_salle **room);
-void				pass_fourmis(t_salle *room, t_allp *path, int nb_f);
+						t_salle **fin, t_salle **room, int color);
+void				pass_fourmis(t_salle *room, t_allp *path, int nb_f, int color);
 int					verif_tri(t_allp *p);
 void				tri_path(t_allp **p);
 int					compar_path(t_path *p1, t_path *p2);

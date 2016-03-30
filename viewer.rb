@@ -57,6 +57,9 @@ class Viewer < Gosu::Window
 				line = re.split
 				i = 0
 				while (line[i])
+					line[i].slice!("\033[32m")
+					line[i].slice!("\033[31m")
+					line[i].slice!("\033[0m")
 					line[i].slice!("L")
 					tmp = line[i].split("-")
 					j = 0

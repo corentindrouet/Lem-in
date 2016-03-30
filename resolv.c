@@ -6,29 +6,30 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 10:59:48 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/03/29 10:49:13 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/03/30 09:23:41 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-void	end_room(t_fourmis **f, t_salle **fin, t_salle **room, char **prout)
+char	*end_room(t_fourmis **f, t_salle **fin, t_salle **room, int color)
 {
 	t_fourmis	*tmp;
 	t_salle		*tempo;
+	char		*prout;
 
 	tmp = *f;
-//	*prout = "{rouge}L%d-%s {eoc}";
-	*prout = "L%d-%s ";
+	prout = (color) ? "{rouge}L%d-%s{eoc} " : "L%d-%s ";
 	tempo = *room;
 	tmp->arrive++;
 	(*fin)->pass++;
 	while (ft_strcmp(tempo->name, tmp->path->name))
 		tempo = tempo->next;
 	tempo->pass = 0;
+	return (prout);
 }
 
-void	deplace_fourmis(t_fourmis **f, t_salle **fin, t_salle **room)
+void	deplace_fourmis(t_fourmis **f, t_salle **fin, t_salle **room, int color)
 {
 	t_fourmis	*tmp;
 	t_salle		*tempo;
@@ -38,11 +39,11 @@ void	deplace_fourmis(t_fourmis **f, t_salle **fin, t_salle **room)
 	tempo = *room;
 	prout = NULL;
 	if (!ft_strcmp(tmp->path->next->name, (*fin)->name))
-		end_room(f, fin, room, &prout);
+		prout = end_room(f, fin, room, color);
 	else
 	{
-		prout = (!ft_strcmp(tmp->path->name, (*room)->name))
-			? "L%d-%s " : "L%d-%s ";
+		prout = (color && !ft_strcmp(tmp->path->name, (*room)->name))
+			? "{vert}L%d-%s{eoc} " : "L%d-%s ";
 		while (ft_strcmp(tempo->name, tmp->path->next->name))
 			tempo = tempo->next;
 		if (tempo->pass)
@@ -74,7 +75,7 @@ void	aff_fourmis(t_fourmis **f, int nb_f)
 	}
 }
 
-void	pass_fourmis(t_salle *room, t_allp *path, int nb_f)
+void	pass_fourmis(t_salle *room, t_allp *path, int nb_f, int color)
 {
 	t_salle		*fin;
 	t_fourmis	**f;
@@ -95,7 +96,7 @@ void	pass_fourmis(t_salle *room, t_allp *path, int nb_f)
 			while (tmp)
 			{
 				if (!tmp->arrive)
-					deplace_fourmis(&tmp, &fin, &room);
+					deplace_fourmis(&tmp, &fin, &room, color);
 				tmp = tmp->next;
 			}
 		}
